@@ -22,9 +22,9 @@ First, create and activate the environment:
 conda create -n RiemannSD-Net python=3.11.11
 conda activate RiemannSD-Net
 ```
-Then install the requirements:[![speechbrain](https://img.shields.io/badge/PyPI-speechbrain==1.0.3-3775A9.svg)](https://pypi.org/project/speechbrain/1.0.3/)
-[![librosa](https://img.shields.io/badge/PyPI-librosa==0.9.1-3775A9.svg)](https://pypi.org/project/librosa/0.9.1/)
-[![pytorch-lightning](https://img.shields.io/badge/PyPI-pytorch--lightning==1.9.5-3775A9.svg)](https://pypi.org/project/pytorch-lightning/1.9.5/)
+Then install the requirements:[![speechbrain](https://img.shields.io/badge/speechbrain-1.0.3-FF6F00?logo=pytorch&logoColor=white)](https://pypi.org/project/speechbrain/1.0.3/)
+[![librosa](https://img.shields.io/badge/librosa-0.9.1-2196F3?logo=python&logoColor=white)](https://pypi.org/project/librosa/0.9.1/)
+[![pytorch-lightning](https://img.shields.io/badge/pytorch--lightning-1.9.5-792EE5?logo=lightning&logoColor=white)](https://pypi.org/project/pytorch-lightning/1.9.5/)
 
 ```bash
 pip install speechbrain==1.0.3
