@@ -1,5 +1,4 @@
-# Disentangling Speaker Traits for Deepfake Source Verification via 
-# Chebyshev Polynomial and Riemannian Metric Learning
+# Disentangling Speaker Traits for Deepfake Source Verification via <br> Chebyshev Polynomial and Riemannian Metric Learning
 
 ## Xi Xuan, Wenxin Zhang, Zhiyu Li, Jennifer Williams, Ville Hautamaki, Tomi Kinnunen
 
