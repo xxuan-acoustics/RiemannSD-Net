@@ -220,7 +220,7 @@ footer a{color:var(--blue);text-decoration:none}footer a:hover{text-decoration:u
 
 <header>
   <div class="paper-title">
-    Disentangling Speaker Traits for Deepfake Source Verification<br>
+    Disentangling Speaker Traits for Deepfake Source Verification
     via Chebyshev Polynomial and Riemannian Metric Learning
   </div>
   <div class="author-line">
@@ -251,30 +251,30 @@ footer a{color:var(--blue);text-decoration:none}footer a:hover{text-decoration:u
 
 <!-- §1 -->
 <section class="section" id="demo">
-  <div class="sec-hd"><span class="sec-num">§ 1</span><h2 class="sec-title">The Verification Challenge</h2></div>
-  <p class="sec-sub">Given two utterances, do they originate from the same TTS source? Select a scenario — the hard cases show why speaker disentanglement is necessary.</p>
+  <div class="sec-hd"><span class="sec-num">§ 1</span><h2 class="sec-title">The Speech Deepfake Source Verification Challenge</h2></div>
+  <!-- <p class="sec-sub">Given two utterances, do they originate from the same TTS source? Select a scenario — the hard cases show why speaker disentanglement is necessary.</p> -->
   <hr class="div">
 
   <div class="sc-tabs">
     <button class="sc-tab active" onclick="setScenario(0,this)">
-      <div class="tab-diff easy">Control</div>
-      <div class="tab-main">Same source</div>
-      <div class="tab-sub">Same speaker · Same TTS</div>
+      <div class="tab-diff easy">Easy</div>
+      <div class="tab-main">Same source · Same speaker</div>
+      <!-- <div class="tab-sub">Same speaker · Same TTS</div> -->
     </button>
     <button class="sc-tab" onclick="setScenario(1,this)">
-      <div class="tab-diff easy">Control</div>
-      <div class="tab-main">Different source</div>
-      <div class="tab-sub">Diff speaker · Diff TTS</div>
+      <div class="tab-diff easy">Easy</div>
+      <div class="tab-main">Different source · Diff speaker</div>
+      <!-- <div class="tab-sub">Diff speaker · Diff TTS</div> -->
     </button>
     <button class="sc-tab" onclick="setScenario(2,this)">
-      <div class="tab-diff hard">⚠ Hard — P-III</div>
-      <div class="tab-main">Different source</div>
-      <div class="tab-sub">Same speaker · Diff TTS</div>
+      <div class="tab-diff hard">⚠ Hard</div>
+      <div class="tab-main">Different source · Same speaker</div>
+      <!-- <div class="tab-sub">Same speaker · Diff TTS</div> -->
     </button>
     <button class="sc-tab" onclick="setScenario(3,this)">
-      <div class="tab-diff hard">⚠ Hard — P-IV</div>
-      <div class="tab-main">Same source</div>
-      <div class="tab-sub">Diff speaker · Same TTS</div>
+      <div class="tab-diff hard">⚠ Hard</div>
+      <div class="tab-main">Same source · Diff speaker</div>
+      <!-- <div class="tab-sub">Diff speaker · Same TTS</div> -->
     </button>
   </div>
 
@@ -289,7 +289,7 @@ footer a{color:var(--blue);text-decoration:none}footer a:hover{text-decoration:u
       <div class="ac-system" id="sys-a">—</div>
       <div class="ac-speaker" id="spk-a">—</div>
       <audio controls id="audio-a"><source id="src-a" src="" type="audio/wav"></audio>
-      <div class="ac-viz"><img id="lfcc-a" src="./assets/lfcc/scene1_A.png" alt="Mel A"><div class="ac-viz-lbl">Mel spectrogram</div></div>
+      <div class="ac-viz"><img id="lfcc-a" src="./assets/lfcc/scene1_A.png" alt="Mel A"><div class="ac-viz-lbl"></div></div>
     </div>
     <div class="meter-panel">
       <div class="vs-label">vs</div>
@@ -313,7 +313,7 @@ footer a{color:var(--blue);text-decoration:none}footer a:hover{text-decoration:u
       <div class="ac-system" id="sys-b">—</div>
       <div class="ac-speaker" id="spk-b">—</div>
       <audio controls id="audio-b"><source id="src-b" src="" type="audio/wav"></audio>
-      <div class="ac-viz"><img id="lfcc-b" src="./assets/lfcc/scene1_B.png" alt="Mel B"><div class="ac-viz-lbl">Mel spectrogram</div></div>
+      <div class="ac-viz"><img id="lfcc-b" src="./assets/lfcc/scene1_B.png" alt="Mel B"><div class="ac-viz-lbl"></div></div>
     </div>
   </div>
 
@@ -330,7 +330,7 @@ footer a{color:var(--blue);text-decoration:none}footer a:hover{text-decoration:u
 <!-- §2 -->
 <section class="section" id="comparison">
   <div class="sec-hd"><span class="sec-num">§ 2</span><h2 class="sec-title">Model Comparison on Hard Case</h2></div>
-  <p class="sec-sub">Same speaker voice, different TTS systems (P-III hard case). Three models, one pair.</p>
+  <p class="sec-sub">Same speaker, different TTS systems</p>
   <hr class="div">
   <div class="method-rows">
     <div class="method-row">
@@ -364,8 +364,8 @@ footer a{color:var(--blue);text-decoration:none}footer a:hover{text-decoration:u
 
 <!-- §3 -->
 <section class="section" id="tsne">
-  <div class="sec-hd"><span class="sec-num">§ 3</span><h2 class="sec-title">Embedding Visualization (Figure 2)</h2></div>
-  <p class="sec-sub">t-SNE of source embeddings from RiemanSD-AAM. Source clusters are compact; speaker coloring shows no pattern — disentanglement confirmed.</p>
+  <div class="sec-hd"><span class="sec-num">§ 3</span><h2 class="sec-title">Embedding Visualization</h2></div>
+  <!-- <p class="sec-sub">t-SNE of source embeddings from RiemanSD-AAM. Source clusters are compact; speaker coloring shows no pattern — disentanglement confirmed.</p> -->
   <hr class="div">
   <div class="tsne-toggle">
     <button class="tsne-btn active" onclick="setTsne('source',this)">Colored by source system</button>
@@ -393,9 +393,9 @@ footer a{color:var(--blue);text-decoration:none}footer a:hover{text-decoration:u
   <p class="sec-sub">Four protocols × two axes: source visibility (seen/unseen) and speaker condition (same/different). 27,530 utterances each, 1:1 balanced. EER/AUC from ResNet34 + RiemanSD-AAM (Table 2).</p>
   <hr class="div">
   <div class="proto-grid">
-    <div class="proto-card">
-      <div class="proto-hd">
-        <div><div class="proto-id">P-I</div><div class="proto-name">Seen Source — Same Speaker</div><div class="proto-desc">Known generators, shared pseudo-speaker identity.</div></div>
+    <div class="proto-card" style="border-color:#bbf7d0">
+      <div class="proto-hd" style="background:#f0fdf4">
+        <div><div class="proto-id" style="background:#bbf7d0;color:#14532d">P-I</div><div class="proto-name">Seen Source — Same Speaker</div><div class="proto-desc"></div></div>
         <div class="proto-stats"><div class="pstat"><span class="v">0.68%</span><span class="k">EER</span></div><div class="pstat"><span class="v">0.998</span><span class="k">AUC</span></div></div>
       </div>
       <div class="proto-body">
@@ -406,9 +406,9 @@ footer a{color:var(--blue);text-decoration:none}footer a:hover{text-decoration:u
         </div>
       </div>
     </div>
-    <div class="proto-card">
-      <div class="proto-hd">
-        <div><div class="proto-id">P-II</div><div class="proto-name">Seen Source — Different Speaker</div><div class="proto-desc">Known generators, different pseudo-speaker identity.</div></div>
+    <div class="proto-card" style="border-color:#bbf7d0">
+      <div class="proto-hd" style="background:#f0fdf4">
+        <div><div class="proto-id" style="background:#bbf7d0;color:#14532d">P-II</div><div class="proto-name">Seen Source — Different Speaker</div><div class="proto-desc"></div></div>
         <div class="proto-stats"><div class="pstat"><span class="v">1.21%</span><span class="k">EER</span></div><div class="pstat"><span class="v">0.996</span><span class="k">AUC</span></div></div>
       </div>
       <div class="proto-body">
@@ -419,9 +419,9 @@ footer a{color:var(--blue);text-decoration:none}footer a:hover{text-decoration:u
         </div>
       </div>
     </div>
-    <div class="proto-card" style="border-color:var(--amber-l)">
-      <div class="proto-hd" style="background:var(--amber-bg)">
-        <div><div class="proto-id" style="background:var(--amber-l);color:#92400e">P-III · Hard</div><div class="proto-name">Unseen Source — Same Speaker</div><div class="proto-desc">Unseen generators, shared speaker voice. Model must ignore speaker similarity and focus on synthesis traces.</div></div>
+    <div class="proto-card" style="border-color:#ddd6fe">
+      <div class="proto-hd" style="background:#faf5ff">
+        <div><div class="proto-id" style="background:#ddd6fe;color:#5b21b6">P-III · Hard</div><div class="proto-name">Unseen Source — Same Speaker</div><div class="proto-desc"></div></div>
         <div class="proto-stats"><div class="pstat"><span class="v">4.08%</span><span class="k">EER</span></div><div class="pstat"><span class="v">0.988</span><span class="k">AUC</span></div></div>
       </div>
       <div class="proto-body">
@@ -432,9 +432,9 @@ footer a{color:var(--blue);text-decoration:none}footer a:hover{text-decoration:u
         </div>
       </div>
     </div>
-    <div class="proto-card" style="border-color:var(--amber-l)">
-      <div class="proto-hd" style="background:var(--amber-bg)">
-        <div><div class="proto-id" style="background:var(--amber-l);color:#92400e">P-IV · Hard</div><div class="proto-name">Unseen Source — Different Speaker</div><div class="proto-desc">Unseen generators, different speaker voices. Model relies entirely on synthesis traces.</div></div>
+    <div class="proto-card" style="border-color:#ddd6fe">
+      <div class="proto-hd" style="background:#faf5ff">
+        <div><div class="proto-id" style="background:#ddd6fe;color:#5b21b6">P-IV · Hard</div><div class="proto-name">Unseen Source — Different Speaker</div><div class="proto-desc"></div></div>
         <div class="proto-stats"><div class="pstat"><span class="v">7.13%</span><span class="k">EER</span></div><div class="pstat"><span class="v">0.972</span><span class="k">AUC</span></div></div>
       </div>
       <div class="proto-body">
@@ -461,7 +461,7 @@ footer a{color:var(--blue);text-decoration:none}footer a:hover{text-decoration:u
     <button class="gal-tab" onclick="filterGal('mms',this)">Meta MMS (1)</button>
   </div>
   <div class="gal-grid">
-    <div class="gal-card" data-cat="foundation"><div class="gal-card-top"><div class="gal-name">suno/bark</div><span class="cat-pill p-foundation">Foundation ~900M</span></div><div class="gal-note">Auto-regressive codec LM · multilingual</div><div class="gal-audio"><audio controls style="width:100%;height:30px"><source src="./assets/audio/bark.wav" type="audio/wav"></audio></div><div class="gal-viz"><div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">Waveform</span></div><img class="wf" src="./assets/waveform/bark.png" alt=""></div><div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">Mel spectrogram</span></div><img class="lf" src="./assets/lfcc/bark.png" alt=""></div></div></div>
+    <div class="gal-card" data-cat="foundation"><div class="gal-card-top"><div class="gal-name">suno/bark</div><span class="cat-pill p-foundation">Foundation ~900M</span></div><div class="gal-note">Auto-regressive codec LM · multilingual</div><div class="gal-audio"><audio controls style="width:100%;height:30px"><source src="./assets/audio/bark.wav" type="audio/wav"></audio></div><div class="gal-viz"><div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">Waveform</span></div><img class="wf" src="./assets/waveform/bark.png" alt=""></div><div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl"></span></div><img class="lf" src="./assets/lfcc/bark.png" alt=""></div></div></div>
     <div class="gal-card" data-cat="foundation"><div class="gal-card-top"><div class="gal-name">xtts_v2</div><span class="cat-pill p-foundation">Foundation ~500M</span></div><div class="gal-note">Zero-shot voice cloning · 17 languages</div><div class="gal-audio"><audio controls style="width:100%;height:30px"><source src="./assets/audio/xtts_v2.wav" type="audio/wav"></audio></div><div class="gal-viz"><div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">Waveform</span></div><img class="wf" src="./assets/waveform/xtts_v2.png" alt=""></div><div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">Mel spectrogram</span></div><img class="lf" src="./assets/lfcc/xtts_v2.png" alt=""></div></div></div>
     <div class="gal-card" data-cat="foundation"><div class="gal-card-top"><div class="gal-name">parler_tts_mini_v1</div><span class="cat-pill p-foundation">Foundation ~120M</span></div><div class="gal-note">Description-guided · controllable style</div><div class="gal-audio"><audio controls style="width:100%;height:30px"><source src="./assets/audio/parler.wav" type="audio/wav"></audio></div><div class="gal-viz"><div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">Waveform</span></div><img class="wf" src="./assets/waveform/parler.png" alt=""></div><div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">Mel spectrogram</span></div><img class="lf" src="./assets/lfcc/parler.png" alt=""></div></div></div>
     <div class="gal-card" data-cat="foundation"><div class="gal-card-top"><div class="gal-name">Metavoice-1B</div><span class="cat-pill p-foundation">Foundation 1B</span></div><div class="gal-note">High-fidelity · fine-tunable voice cloning</div><div class="gal-audio"><audio controls style="width:100%;height:30px"><source src="./assets/audio/metavoice.wav" type="audio/wav"></audio></div><div class="gal-viz"><div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">Waveform</span></div><img class="wf" src="./assets/waveform/metavoice.png" alt=""></div><div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">Mel spectrogram</span></div><img class="lf" src="./assets/lfcc/metavoice.png" alt=""></div></div></div>
