@@ -4,334 +4,207 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SDML Demo · Deepfake Source Verification</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:'DM Sans',sans-serif;background:#fff;color:#0f172a;line-height:1.6;font-size:15px}
-
+body{font-family:'Georgia',serif;background:#fff;color:#111;line-height:1.6;font-size:15px}
 :root{
-  --border:#e2e8f0;--surface:#f8fafc;--surface2:#f1f5f9;
-  --muted:#64748b;--text2:#475569;
-  --radius:12px;--radius-sm:8px;
-  --green:#16a34a;--green-l:#dcfce7;--green-bg:#f0fdf4;
-  --red:#dc2626;--red-l:#fee2e2;--red-bg:#fef2f2;
-  --amber:#d97706;--amber-l:#fef3c7;--amber-bg:#fffbeb;
-  --blue:#2563eb;--blue-l:#dbeafe;--blue-bg:#eff6ff;
-  --purple:#7c3aed;--purple-l:#ede9fe;--purple-bg:#faf5ff;
+  --border:#dde3ea;--surface:#f7f9fb;--surface2:#eef1f5;
+  --muted:#64748b;--text2:#445566;--radius:10px;--radius-sm:6px;
+  --green:#15803d;--green-l:#bbf7d0;--green-bg:#f0fdf4;
+  --red:#b91c1c;--red-l:#fecaca;--red-bg:#fff5f5;
+  --amber:#b45309;--amber-l:#fde68a;--amber-bg:#fffbeb;
+  --blue:#1d4ed8;--blue-l:#bfdbfe;--blue-bg:#eff6ff;
+  --purple:#6d28d9;--purple-l:#ddd6fe;--purple-bg:#faf5ff;
+  --mono:'Courier New',Courier,monospace;
 }
-
-/* ── NAV ── */
-nav{
-  position:sticky;top:0;z-index:100;
-  background:rgba(255,255,255,0.94);
-  backdrop-filter:blur(10px);
-  border-bottom:1px solid var(--border);
-}
-.nav-inner{
-  max-width:1120px;margin:0 auto;padding:0 24px;
-  display:flex;align-items:center;justify-content:space-between;height:52px;
-}
-.nav-logo{font-family:'DM Mono',monospace;font-size:13px;color:var(--muted);text-decoration:none;font-weight:500}
-.nav-links{display:flex;gap:2px}
-.nav-link{font-size:13px;color:var(--muted);text-decoration:none;padding:6px 12px;border-radius:6px;transition:.15s}
+nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:1500px;margin:0 auto;padding:0 40px;display:flex;align-items:center;justify-content:space-between;height:50px}
+.nav-logo{font-family:var(--mono);font-size:12.5px;color:var(--muted);text-decoration:none}
+.nav-links{display:flex}
+.nav-link{font-size:13px;color:var(--muted);text-decoration:none;padding:6px 13px;border-radius:5px;font-family:'Georgia',serif;transition:.12s}
 .nav-link:hover{color:var(--blue);background:var(--blue-bg)}
-
-/* ── PAGE ── */
-.page{max-width:1120px;margin:0 auto;padding:0 24px 80px}
-
-/* ── HEADER ── */
-header{padding:56px 0 44px;border-bottom:1px solid var(--border);margin-bottom:60px}
-.venue-pill{
-  display:inline-flex;align-items:center;gap:6px;
-  font-family:'DM Mono',monospace;font-size:11.5px;letter-spacing:.03em;
-  color:var(--blue);background:var(--blue-bg);border:1px solid var(--blue-l);
-  padding:4px 14px;border-radius:20px;margin-bottom:20px;
-}
-.paper-title{
-  font-family:'Newsreader',serif;font-size:clamp(22px,3vw,30px);font-weight:500;
-  line-height:1.35;color:#0f172a;margin-bottom:22px;max-width:840px;
-}
-.author-line{font-size:14.5px;color:var(--text2);line-height:1.9;margin-bottom:2px}
-.author-line sup{font-size:9px;color:var(--blue)}
-.affil-line{font-size:13px;color:var(--muted);line-height:1.9}
+.page{max-width:1500px;margin:0 auto;padding:0 40px 80px}
+header{padding:48px 0 36px;border-bottom:1px solid var(--border);margin-bottom:48px}
+.paper-title{font-size:clamp(20px,2.4vw,30px);font-weight:bold;font-style:normal;line-height:1.38;color:#0a0a0a;margin-bottom:20px;max-width:880px}
+.author-line{font-size:14px;color:var(--text2);line-height:1.9;margin-bottom:2px}
+.author-line sup{font-size:9px;color:var(--blue);font-style:normal}
+.affil-line{font-size:12.5px;color:var(--muted);line-height:1.9}
 .affil-line sup{font-size:9px;color:var(--blue)}
-.hdr-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
-.btn{
-  display:inline-flex;align-items:center;gap:7px;font-size:13.5px;font-weight:500;
-  padding:9px 20px;border-radius:8px;text-decoration:none;border:1px solid transparent;
-  cursor:pointer;transition:.15s;font-family:'DM Sans',sans-serif;
-}
-.btn-dark{background:#0f172a;color:#fff}
-.btn-dark:hover{background:#1e293b}
-.btn-out{background:#fff;color:var(--text2);border-color:var(--border)}
-.btn-out:hover{border-color:#94a3b8;color:#0f172a}
+.hdr-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+.btn{display:inline-flex;align-items:center;gap:6px;font-size:13px;padding:8px 18px;border-radius:7px;text-decoration:none;border:1px solid transparent;cursor:pointer;transition:.14s;font-family:'Georgia',serif}
+.btn-dark{background:#111;color:#fff}.btn-dark:hover{background:#333}
+.btn-out{background:#fff;color:var(--text2);border-color:var(--border)}.btn-out:hover{border-color:#99b;color:#111}
 
-/* ── SECTIONS ── */
-.section{margin-bottom:72px}
-.sec-hd{display:flex;align-items:baseline;gap:12px;margin-bottom:6px}
-.sec-num{
-  font-family:'DM Mono',monospace;font-size:11px;font-weight:500;
-  letter-spacing:.06em;color:var(--muted);background:var(--surface2);
-  padding:3px 9px;border-radius:5px;
-}
-.sec-title{font-family:'Newsreader',serif;font-size:21px;font-weight:500}
-.sec-sub{font-size:13.5px;color:var(--muted);margin-bottom:24px;line-height:1.6;max-width:720px}
-hr.div{height:1px;background:var(--border);border:none;margin:8px 0 24px}
+/* contrib strip */
+.contrib-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:52px}
+.contrib-item{background:#fff;padding:22px 26px}
+.contrib-num{font-family:var(--mono);font-size:10.5px;color:var(--muted);margin-bottom:8px;letter-spacing:.06em}
+.contrib-title{font-size:14.5px;font-style:italic;color:#111;margin-bottom:6px}
+.contrib-body{font-size:12.5px;color:var(--muted);line-height:1.6}
 
-/* ── SCENARIO TABS ── */
-.sc-tabs{
-  display:grid;grid-template-columns:repeat(4,1fr);gap:4px;
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:var(--radius);padding:4px;margin-bottom:24px;
-}
-.sc-tab{
-  padding:10px 12px;border-radius:var(--radius-sm);border:none;background:transparent;
-  cursor:pointer;text-align:left;transition:.15s;
-}
+/* sections */
+.section{margin-bottom:60px}
+.sec-hd{display:flex;align-items:baseline;gap:11px;margin-bottom:5px}
+.sec-num{font-family:var(--mono);font-size:10.5px;color:var(--muted);background:var(--surface2);padding:2px 8px;border-radius:4px}
+.sec-title{font-size:20px;font-weight:600;font-style:normal}
+.sec-sub{font-size:13.5px;color:var(--muted);margin-bottom:20px;line-height:1.65;max-width:760px}
+hr.div{height:1px;background:var(--border);border:none;margin:7px 0 20px}
+
+/* scenario tabs */
+.sc-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:3px;margin-bottom:16px}
+.sc-tab{padding:10px 12px;border-radius:var(--radius-sm);border:none;background:transparent;cursor:pointer;text-align:left;transition:.12s;font-family:'Georgia',serif}
 .sc-tab:hover{background:var(--border)}
-.sc-tab.active{background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.09)}
-.tab-diff{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px}
-.tab-diff.easy{color:var(--green)}
-.tab-diff.hard{color:var(--amber)}
-.tab-main{font-size:12.5px;font-weight:500;color:#0f172a;line-height:1.3}
+.sc-tab.active{background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.tab-diff{font-size:9.5px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;margin-bottom:3px;font-family:var(--mono)}
+.tab-diff.easy{color:var(--green)}.tab-diff.hard{color:var(--amber)}
+.tab-main{font-size:13px;font-style:italic;color:#111;line-height:1.3}
 .tab-sub{font-size:11px;color:var(--muted);margin-top:2px}
 
-/* ── HARD CASE BANNER ── */
-.hard-banner{
-  display:none;align-items:flex-start;gap:10px;
-  background:var(--amber-bg);border:1px solid var(--amber-l);
-  border-radius:var(--radius-sm);padding:12px 16px;margin-bottom:16px;
-  font-size:13px;color:#92400e;line-height:1.55;
-}
+/* hard banner */
+.hard-banner{display:none;align-items:flex-start;gap:9px;background:var(--amber-bg);border:1px solid var(--amber-l);border-radius:var(--radius-sm);padding:10px 15px;margin-bottom:14px;font-size:13px;color:#92400e;line-height:1.55;font-style:italic}
 .hard-banner.show{display:flex}
-.hard-banner svg{flex-shrink:0;margin-top:1px}
 
-/* ── VERIFY LAYOUT ── */
-.verify-layout{display:grid;grid-template-columns:1fr 180px 1fr;gap:16px;align-items:start;margin-bottom:16px}
+/* verify layout */
+.verify-layout{display:grid;grid-template-columns:1fr 160px 1fr;gap:14px;align-items:start;margin-bottom:14px}
+.audio-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px}
+.ac-label{font-size:9.5px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;font-family:var(--mono)}
+.ac-system{font-family:var(--mono);font-size:11.5px;color:#111;line-height:1.35;word-break:break-all}
+.ac-speaker{font-size:12px;color:var(--muted);margin-top:3px;margin-bottom:10px;font-style:italic}
+audio{width:100%;height:32px;display:block;margin-bottom:10px}
+.ac-viz{border:1px solid var(--border);border-radius:5px;overflow:hidden}
+.ac-viz img{width:100%;display:block;object-fit:cover;max-height:68px}
+.ac-viz-lbl{font-size:9.5px;font-family:var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted);padding:4px 9px;background:var(--surface2);border-top:1px solid var(--border)}
 
-/* ── AUDIO CARD ── */
-.audio-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px}
-.ac-label{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
-.ac-system{font-family:'DM Mono',monospace;font-size:12.5px;font-weight:500;color:#0f172a}
-.ac-speaker{font-size:12px;color:var(--muted);margin-top:3px;margin-bottom:12px}
-audio{width:100%;height:34px;display:block;margin-bottom:12px}
-.ac-viz{border:1px solid var(--border);border-radius:6px;overflow:hidden}
-.ac-viz img{width:100%;display:block;object-fit:cover;max-height:72px}
-.ac-viz-lbl{
-  font-size:10px;font-family:'DM Mono',monospace;letter-spacing:.05em;text-transform:uppercase;
-  color:var(--muted);padding:5px 10px;background:var(--surface2);border-top:1px solid var(--border);
-}
-
-/* ── METER PANEL ── */
-.meter-panel{display:flex;flex-direction:column;align-items:center;gap:14px;padding-top:28px}
-.vs-label{font-family:'Newsreader',serif;font-size:18px;color:var(--muted);font-style:italic}
-
+/* meter */
+.meter-panel{display:flex;flex-direction:column;align-items:center;gap:12px;padding-top:22px}
+.vs-label{font-size:17px;color:var(--muted);font-style:italic}
 .meter-wrap{width:100%}
-.meter-title{
-  font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;
-  color:var(--muted);text-align:center;margin-bottom:10px;
-}
-.meter-bar-outer{position:relative;height:52px;width:100%}
-.meter-bar{
-  position:absolute;top:50%;transform:translateY(-50%);
-  width:100%;height:10px;border-radius:5px;
-  background:linear-gradient(to right,#fca5a5 0%,#fde68a 45%,#86efac 100%);
-}
-.meter-thr{
-  position:absolute;top:50%;left:50%;
-  transform:translate(-50%,-50%);
-  width:2px;height:24px;background:#94a3b8;z-index:2;
-}
-.meter-thr-lbl{
-  position:absolute;top:50%;left:50%;
-  transform:translate(-50%,calc(-50% - 18px));
-  font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);white-space:nowrap;
-}
-.meter-needle{
-  position:absolute;top:50%;width:20px;height:20px;
-  transform:translate(-50%,-50%);
-  border-radius:50%;background:#0f172a;
-  border:3px solid #fff;box-shadow:0 0 0 1.5px #0f172a,0 2px 8px rgba(0,0,0,.18);
-  transition:left .7s cubic-bezier(.34,1.4,.64,1);z-index:3;
-}
-.meter-ends{display:flex;justify-content:space-between;margin-top:4px}
+.meter-title{font-size:9.5px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);text-align:center;margin-bottom:9px;font-family:var(--mono)}
+.meter-bar-outer{position:relative;height:50px;width:100%}
+.meter-bar{position:absolute;top:50%;transform:translateY(-50%);width:100%;height:9px;border-radius:5px;background:linear-gradient(to right,#fca5a5 0%,#fde68a 45%,#86efac 100%)}
+.meter-thr{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:2px;height:22px;background:#aaa;z-index:2}
+.meter-thr-lbl{position:absolute;top:50%;left:50%;transform:translate(-50%,calc(-50% - 17px));font-family:var(--mono);font-size:9px;color:var(--muted);white-space:nowrap}
+.meter-needle{position:absolute;top:50%;width:18px;height:18px;transform:translate(-50%,-50%);border-radius:50%;background:#111;border:3px solid #fff;box-shadow:0 0 0 1.5px #111,0 2px 6px rgba(0,0,0,.18);transition:left .65s cubic-bezier(.34,1.4,.64,1);z-index:3}
+.meter-ends{display:flex;justify-content:space-between;margin-top:3px}
 .meter-end{font-size:10px;color:var(--muted)}
-.meter-score{text-align:center;margin-top:4px}
-.meter-score-num{font-family:'DM Mono',monospace;font-size:24px;font-weight:500;color:#0f172a}
-.meter-dec{
-  display:inline-flex;align-items:center;gap:5px;
-  font-size:12px;font-weight:600;padding:4px 14px;border-radius:20px;margin-top:6px;
-}
-.dec-same{background:var(--green-l);color:var(--green)}
-.dec-diff{background:var(--red-l);color:var(--red)}
+.meter-score{text-align:center;margin-top:3px}
+.meter-score-num{font-family:var(--mono);font-size:22px;font-weight:500;color:#111}
+.meter-dec{display:inline-flex;align-items:center;gap:5px;font-size:12px;padding:3px 13px;border-radius:20px;margin-top:5px;font-style:italic}
+.dec-same{background:var(--green-l);color:var(--green)}.dec-diff{background:var(--red-l);color:var(--red)}
 
-/* ── GROUND TRUTH BAR ── */
-.truth-bar{
-  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
-  padding:14px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;
-}
-.truth-left{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-.truth-lbl{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
-.truth-badge{font-size:12.5px;font-weight:600;padding:5px 14px;border-radius:20px}
-.truth-same{background:var(--green-l);color:var(--green)}
-.truth-diff{background:var(--red-l);color:var(--red)}
-.truth-desc{font-size:13px;color:var(--text2);font-style:italic;line-height:1.5;max-width:500px}
+/* truth bar */
+.truth-bar{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:12px 18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.truth-left{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.truth-lbl{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-family:var(--mono)}
+.truth-badge{font-size:12px;padding:4px 13px;border-radius:20px;font-style:italic}
+.truth-same{background:var(--green-l);color:var(--green)}.truth-diff{background:var(--red-l);color:var(--red)}
+.truth-desc{font-size:13px;color:var(--text2);font-style:italic;line-height:1.55;max-width:520px}
 
-/* ── METHOD COMPARISON ── */
-.method-rows{display:flex;flex-direction:column;gap:12px}
-.method-row{
-  border:1px solid var(--border);border-radius:var(--radius);padding:18px 22px;
-  display:grid;grid-template-columns:200px 1fr 180px;gap:20px;align-items:center;transition:.2s;
-}
-.method-row:hover{border-color:#94a3b8}
-.method-row.ours{border-color:var(--purple-l);background:var(--purple-bg)}
-.method-name-col .name{font-size:14px;font-weight:500;color:#0f172a}
-.method-tag{
-  font-size:10px;font-weight:600;letter-spacing:.05em;padding:2px 9px;
-  border-radius:4px;margin-top:5px;display:inline-block;
-}
-.mt-baseline{background:var(--surface2);color:var(--muted)}
-.mt-ours{background:var(--purple-l);color:var(--purple)}
-.bar-col{display:flex;flex-direction:column;gap:5px}
-.bar-track{height:9px;background:var(--border);border-radius:5px;overflow:hidden;position:relative}
-.bar-fill{height:100%;border-radius:5px;transition:width .8s cubic-bezier(.34,1.1,.64,1)}
-.bar-thr{position:absolute;top:0;left:50%;width:2px;height:100%;background:rgba(0,0,0,.2)}
+/* method rows */
+.method-rows{display:flex;flex-direction:column;gap:10px}
+.method-row{border:1px solid var(--border);border-radius:var(--radius);padding:16px 22px;display:grid;grid-template-columns:210px 1fr 150px;gap:18px;align-items:center;transition:.14s}
+.method-row:hover{border-color:#aab}.method-row.ours{border-color:var(--purple-l);background:var(--purple-bg)}
+.m-name{font-size:14px;font-style:italic;color:#111}
+.m-tag{font-size:9.5px;font-weight:600;letter-spacing:.05em;padding:2px 8px;border-radius:4px;margin-top:4px;display:inline-block;font-family:var(--mono)}
+.mt-base{background:var(--surface2);color:var(--muted)}.mt-ours{background:var(--purple-l);color:var(--purple)}
+.bar-col{display:flex;flex-direction:column;gap:4px}
+.bar-track{height:8px;background:var(--border);border-radius:5px;overflow:hidden;position:relative}
+.bar-fill{height:100%;border-radius:5px;transition:width .7s cubic-bezier(.34,1.1,.64,1)}
+.bar-thr{position:absolute;top:0;left:50%;width:2px;height:100%;background:rgba(0,0,0,.15)}
 .bar-row{display:flex;justify-content:space-between;align-items:center}
-.bar-score{font-family:'DM Mono',monospace;font-size:12px;font-weight:500;color:#0f172a}
-.bar-lbl{font-size:11px;color:var(--muted)}
+.bar-score{font-family:var(--mono);font-size:12px;color:#111}
+.bar-lbl{font-size:11.5px;color:var(--muted);font-style:italic}
 .result-col{text-align:right}
-.res-badge{
-  font-size:12.5px;font-weight:600;padding:7px 16px;border-radius:8px;display:inline-block;
-}
+.res-badge{font-size:12.5px;padding:6px 14px;border-radius:7px;display:inline-block;font-style:italic}
 .res-ok{background:var(--green-bg);color:var(--green);border:1px solid var(--green-l)}
 .res-no{background:var(--red-bg);color:var(--red);border:1px solid var(--red-l)}
-.res-drop{font-size:11px;color:var(--green);margin-top:5px;font-family:'DM Mono',monospace}
+.res-note{font-size:11px;font-family:var(--mono);margin-top:4px;color:var(--green)}
 
-/* ── TSNE ── */
-.tsne-toggle{
-  display:flex;gap:0;border:1px solid var(--border);border-radius:var(--radius-sm);
-  padding:4px;background:var(--surface);width:fit-content;margin-bottom:20px;
-}
-.tsne-btn{
-  padding:8px 20px;border:none;border-radius:6px;font-size:13px;font-weight:500;
-  cursor:pointer;background:transparent;color:var(--muted);transition:.15s;
-  font-family:'DM Sans',sans-serif;
-}
-.tsne-btn.active{background:#fff;color:#0f172a;box-shadow:0 1px 3px rgba(0,0,0,.1)}
-.tsne-frame{
-  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
-  padding:24px;text-align:center;
-}
-.tsne-frame img{max-width:100%;max-height:440px;border-radius:8px;display:inline-block}
-.tsne-insight{
-  background:var(--blue-bg);border:1px solid var(--blue-l);border-radius:var(--radius-sm);
-  padding:14px 18px;margin-top:16px;font-size:13.5px;color:#1e40af;line-height:1.6;text-align:left;
-}
-.tsne-insight strong{font-weight:600}
-.tsne-legend{display:flex;gap:20px;justify-content:center;margin-top:14px;flex-wrap:wrap}
-.leg-item{display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--text2)}
-.leg-dot{width:11px;height:11px;border-radius:50%;flex-shrink:0}
+/* results table */
+.tbl-wrap{overflow-x:auto}
+table.rtbl{width:100%;border-collapse:collapse;font-size:13px}
+table.rtbl th{background:var(--surface2);padding:9px 13px;text-align:center;font-weight:normal;font-style:italic;color:var(--text2);border:1px solid var(--border);white-space:nowrap;font-size:12.5px}
+table.rtbl th.left{text-align:left}
+table.rtbl td{padding:8px 13px;border:1px solid var(--border);text-align:center;font-family:var(--mono);font-size:12px}
+table.rtbl td.enc{font-family:var(--mono);font-size:11.5px;text-align:left;color:var(--muted);background:var(--surface)}
+table.rtbl td.mth{font-family:'Georgia',serif;font-style:italic;font-size:13px;text-align:left;padding-left:18px}
+table.rtbl tr.ours td{background:var(--purple-bg)}
+table.rtbl tr.best td{font-weight:700}
+.badge-o{font-size:9px;font-family:var(--mono);padding:1px 6px;background:var(--purple-l);color:var(--purple);border-radius:3px;margin-left:5px;vertical-align:middle}
 
-/* ── PROTOCOLS ── */
-.proto-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+/* tsne */
+.tsne-toggle{display:flex;border:1px solid var(--border);border-radius:var(--radius-sm);padding:3px;background:var(--surface);width:fit-content;margin-bottom:18px}
+.tsne-btn{padding:7px 20px;border:none;border-radius:5px;font-size:13px;font-style:italic;cursor:pointer;background:transparent;color:var(--muted);transition:.12s;font-family:'Georgia',serif}
+.tsne-btn.active{background:#fff;color:#111;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.tsne-frame{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px;text-align:center}
+.tsne-frame img{max-width:100%;max-height:460px;border-radius:7px;display:inline-block}
+.tsne-cap{font-size:13px;color:var(--text2);font-style:italic;margin-top:12px;line-height:1.6}
+.tsne-legend{display:flex;gap:18px;justify-content:center;margin-top:11px;flex-wrap:wrap}
+.leg-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2);font-style:italic}
+.leg-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+
+/* protocols */
+.proto-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
 .proto-card{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
-.proto-hd{
-  padding:14px 18px;border-bottom:1px solid var(--border);
-  display:flex;justify-content:space-between;align-items:flex-start;
-}
-.proto-id{
-  font-family:'DM Mono',monospace;font-size:11px;font-weight:500;
-  background:var(--surface2);color:var(--muted);padding:2px 9px;border-radius:4px;
-}
-.proto-stats{display:flex;gap:14px;text-align:center}
-.pstat .v{font-family:'DM Mono',monospace;font-size:15px;font-weight:500;color:#0f172a;display:block}
-.pstat .k{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
-.proto-name{font-size:14px;font-weight:500;color:#0f172a;margin-top:6px}
-.proto-desc{font-size:12px;color:var(--muted);margin-top:3px;line-height:1.4}
-.proto-body{padding:14px 18px}
-.proto-pair-lbl{
-  font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;
-  color:var(--muted);margin-bottom:9px;
-}
-.proto-pair{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.proto-slot{
-  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 12px;
-}
-.proto-sys{font-size:11.5px;font-weight:500;font-family:'DM Mono',monospace;color:#0f172a;margin-bottom:3px}
-.proto-spk{font-size:11px;color:var(--muted);margin-bottom:8px}
+.proto-hd{padding:14px 17px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.proto-id{font-family:var(--mono);font-size:10.5px;background:var(--surface2);color:var(--muted);padding:2px 8px;border-radius:4px;display:inline-block;margin-bottom:5px}
+.proto-name{font-size:13.5px;font-style:italic;color:#111}
+.proto-desc{font-size:12px;color:var(--muted);margin-top:3px;line-height:1.45}
+.proto-stats{display:flex;gap:14px;text-align:center;flex-shrink:0}
+.pstat .v{font-family:var(--mono);font-size:15px;font-weight:600;color:#111;display:block}
+.pstat .k{font-size:9.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;font-family:var(--mono)}
+.proto-body{padding:13px 17px}
+.proto-pair-lbl{font-size:9.5px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:8px;font-family:var(--mono)}
+.proto-pair{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.proto-slot{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:9px 11px}
+.proto-sys{font-size:11px;font-family:var(--mono);color:#111;margin-bottom:3px}
+.proto-spk{font-size:11px;color:var(--muted);margin-bottom:7px;font-style:italic}
 
-/* ── GALLERY ── */
-.gal-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
-.gal-tab{
-  font-size:13px;font-weight:500;padding:7px 16px;border-radius:30px;
-  border:1px solid var(--border);background:#fff;color:var(--text2);cursor:pointer;transition:.15s;
-}
-.gal-tab:hover{border-color:#94a3b8}
-.gal-tab.active{background:#0f172a;color:#fff;border-color:#0f172a}
-.gal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(295px,1fr));gap:16px}
-.gal-card{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:.2s}
-.gal-card:hover{box-shadow:0 4px 18px rgba(0,0,0,.07)}
-.gal-card-top{padding:14px 16px 8px;display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
-.gal-name{font-family:'DM Mono',monospace;font-size:12px;font-weight:500;color:#0f172a;line-height:1.4;word-break:break-all}
-.cat-pill{font-size:10px;font-weight:600;padding:3px 9px;border-radius:20px;white-space:nowrap;flex-shrink:0}
-.p-foundation{background:#dbeafe;color:#1d4ed8}
-.p-vits{background:#d1fae5;color:#065f46}
-.p-tacotron{background:#fef3c7;color:#92400e}
-.p-mms{background:#fce7f3;color:#9d174d}
-.gal-note{font-size:11.5px;color:var(--muted);padding:0 16px 10px;line-height:1.4}
-.gal-audio{padding:0 16px 10px}
-.gal-viz{padding:0 16px 16px;display:flex;flex-direction:column;gap:8px}
-.gal-viz-item{border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;background:var(--surface)}
-.gal-viz-hd{padding:5px 10px}
-.gal-viz-lbl{font-size:10px;font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+/* gallery */
+.gal-tabs{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:20px}
+.gal-tab{font-size:12.5px;font-style:italic;padding:6px 16px;border-radius:30px;border:1px solid var(--border);background:#fff;color:var(--text2);cursor:pointer;transition:.12s;font-family:'Georgia',serif}
+.gal-tab:hover{border-color:#aab}.gal-tab.active{background:#111;color:#fff;border-color:#111}
+.gal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px}
+.gal-card{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:.15s}
+.gal-card:hover{box-shadow:0 3px 14px rgba(0,0,0,.07)}
+.gal-card-top{padding:13px 15px 7px;display:flex;justify-content:space-between;align-items:flex-start;gap:7px}
+.gal-name{font-family:var(--mono);font-size:11.5px;color:#111;line-height:1.35;word-break:break-all}
+.cat-pill{font-size:9.5px;padding:2px 8px;border-radius:20px;white-space:nowrap;flex-shrink:0;font-family:var(--mono)}
+.p-foundation{background:#dbeafe;color:#1d4ed8}.p-vits{background:#d1fae5;color:#065f46}
+.p-tacotron{background:#fef3c7;color:#92400e}.p-mms{background:#fce7f3;color:#9d174d}
+.gal-note{font-size:11.5px;color:var(--muted);padding:0 15px 9px;line-height:1.45;font-style:italic}
+.gal-audio{padding:0 15px 9px}
+.gal-viz{padding:0 15px 15px;display:flex;flex-direction:column;gap:7px}
+.gal-viz-item{border:1px solid var(--border);border-radius:5px;overflow:hidden;background:var(--surface)}
+.gal-viz-hd{padding:4px 9px}
+.gal-viz-lbl{font-size:9.5px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
 .gal-viz-item img{width:100%;display:block;object-fit:cover}
-.gal-viz-item img.wf{max-height:60px}
-.gal-viz-item img.lf{max-height:80px}
+.gal-viz-item img.wf{max-height:56px}.gal-viz-item img.lf{max-height:75px}
 
-/* ── CITATION ── */
-.cite-wrap{background:#0f172a;border-radius:var(--radius);padding:28px 32px;position:relative}
-.cite-text{
-  font-family:'DM Mono',monospace;font-size:12.5px;line-height:1.8;
-  color:#94a3b8;white-space:pre-wrap;word-break:break-word;
-}
+/* citation */
+.cite-wrap{background:#0f172a;border-radius:var(--radius);padding:26px 30px;position:relative}
+.cite-text{font-family:var(--mono);font-size:12.5px;line-height:1.8;color:#94a3b8;white-space:pre-wrap;word-break:break-word}
 .c-key{color:#7dd3fc}.c-field{color:#6ee7b7}.c-val{color:#fcd34d}
-.copy-btn{
-  position:absolute;top:16px;right:16px;font-family:'DM Sans',sans-serif;
-  font-size:12px;font-weight:500;padding:6px 16px;
-  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);
-  border-radius:6px;color:#94a3b8;cursor:pointer;transition:.15s;
-}
+.copy-btn{position:absolute;top:14px;right:14px;font-family:'Georgia',serif;font-size:12px;padding:5px 14px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.13);border-radius:5px;color:#94a3b8;cursor:pointer;transition:.13s}
 .copy-btn:hover{background:rgba(255,255,255,.13);color:#e2e8f0}
 
-/* ── FOOTER ── */
-footer{margin-top:56px;padding-top:24px;border-top:1px solid var(--border);text-align:center;font-size:13px;color:var(--muted);line-height:1.9}
-footer a{color:var(--blue);text-decoration:none}
-footer a:hover{text-decoration:underline}
+footer{margin-top:52px;padding-top:22px;border-top:1px solid var(--border);text-align:center;font-size:12.5px;color:var(--muted);line-height:1.9;font-style:italic}
+footer a{color:var(--blue);text-decoration:none}footer a:hover{text-decoration:underline}
 
-/* ── RESPONSIVE ── */
-@media(max-width:760px){
-  .sc-tabs{grid-template-columns:1fr 1fr}
-  .verify-layout{grid-template-columns:1fr}
-  .meter-panel{width:100%}
-  .method-row{grid-template-columns:1fr}
-  .proto-grid{grid-template-columns:1fr}
-  .proto-pair{grid-template-columns:1fr}
+@media(max-width:960px){
+  .sc-tabs{grid-template-columns:1fr 1fr}.verify-layout{grid-template-columns:1fr}
+  .method-row{grid-template-columns:1fr}.proto-grid{grid-template-columns:1fr}
+  .proto-pair{grid-template-columns:1fr}.contrib-strip{grid-template-columns:1fr}
   .nav-links{display:none}
-}
-@media(max-width:500px){
-  .sc-tabs{grid-template-columns:1fr}
 }
 </style>
 </head>
 <body>
 
-<!-- ═══════ NAV ═══════ -->
 <nav>
 <div class="nav-inner">
-  <a href="#" class="nav-logo">SDML · Interspeech 2026</a>
+  <a href="#" class="nav-logo">SDML · Demo</a>
   <div class="nav-links">
     <a href="#demo" class="nav-link">Demo</a>
     <a href="#comparison" class="nav-link">Comparison</a>
@@ -343,17 +216,16 @@ footer a:hover{text-decoration:underline}
 </div>
 </nav>
 
-<!-- ═══════ HEADER ═══════ -->
 <div class="page">
+
 <header>
-  <div class="venue-pill">Interspeech 2026 · Demo Page</div>
   <div class="paper-title">
     Disentangling Speaker Traits for Deepfake Source Verification<br>
     via Chebyshev Polynomial and Riemannian Metric Learning
   </div>
   <div class="author-line">
-    Xi Xuan<sup>1,2</sup>&nbsp; Wenxin Zhang<sup>3</sup>&nbsp; Zhiyu Li<sup>4</sup>&nbsp;
-    Jennifer Williams<sup>5</sup>&nbsp; Ville Hautamäki<sup>1</sup>&nbsp; Tomi Kinnunen<sup>1</sup>
+    Xi Xuan<sup>1,2</sup>&ensp;Wenxin Zhang<sup>3</sup>&ensp;Zhiyu Li<sup>4</sup>&ensp;
+    Jennifer Williams<sup>5</sup>&ensp;Ville Hautamäki<sup>1</sup>&ensp;Tomi Kinnunen<sup>1</sup>
   </div>
   <div class="affil-line">
     <sup>1</sup>University of Eastern Finland&ensp;
@@ -364,33 +236,25 @@ footer a:hover{text-decoration:underline}
   </div>
   <div class="hdr-actions">
     <a href="https://arxiv.org/abs/XXXX.XXXXX" class="btn btn-dark" target="_blank">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-      Paper (arXiv)
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Paper
     </a>
     <a href="https://github.com/xxuan-acoustics/RiemannSD-Net" class="btn btn-out" target="_blank">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.5.99.11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02 0 2.04.14 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.25 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
-      Code
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.5.99.11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02 0 2.04.14 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.25 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>Code
     </a>
     <a href="#demo" class="btn btn-out">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
-      Audio Demo
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>Audio Demo
     </a>
   </div>
 </header>
 
-<!-- ═══════ §1 VERIFICATION DEMO ═══════ -->
+
+
+<!-- §1 -->
 <section class="section" id="demo">
-  <div class="sec-hd">
-    <span class="sec-num">§ 1</span>
-    <h2 class="sec-title">The Verification Challenge</h2>
-  </div>
-  <p class="sec-sub">
-    Given two speech utterances, does this pair originate from the <em>same</em> TTS source generator?
-    Select a scenario below — the hard cases reveal exactly why speaker disentanglement matters.
-  </p>
+  <div class="sec-hd"><span class="sec-num">§ 1</span><h2 class="sec-title">The Verification Challenge</h2></div>
+  <p class="sec-sub">Given two utterances, do they originate from the same TTS source? Select a scenario — the hard cases show why speaker disentanglement is necessary.</p>
   <hr class="div">
 
-  <!-- TABS -->
   <div class="sc-tabs">
     <button class="sc-tab active" onclick="setScenario(0,this)">
       <div class="tab-diff easy">Control</div>
@@ -414,29 +278,19 @@ footer a:hover{text-decoration:underline}
     </button>
   </div>
 
-  <!-- HARD BANNER -->
   <div class="hard-banner" id="hard-banner">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="2" style="flex-shrink:0;margin-top:1px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
     <span id="hard-banner-text"></span>
   </div>
 
-  <!-- AUDIO + METER -->
   <div class="verify-layout">
-    <!-- Left audio -->
     <div class="audio-card">
       <div class="ac-label">Utterance A</div>
       <div class="ac-system" id="sys-a">—</div>
       <div class="ac-speaker" id="spk-a">—</div>
-      <audio controls id="audio-a">
-        <source id="src-a" src="" type="audio/wav">
-      </audio>
-      <div class="ac-viz">
-        <img id="lfcc-a" src="./assets/lfcc/scene1_A.png" alt="LFCC A">
-        <div class="ac-viz-lbl">LFCC spectrogram</div>
-      </div>
+      <audio controls id="audio-a"><source id="src-a" src="" type="audio/wav"></audio>
+      <div class="ac-viz"><img id="lfcc-a" src="./assets/lfcc/scene1_A.png" alt="Mel A"><div class="ac-viz-lbl">Mel spectrogram</div></div>
     </div>
-
-    <!-- Meter -->
     <div class="meter-panel">
       <div class="vs-label">vs</div>
       <div class="meter-wrap">
@@ -447,152 +301,78 @@ footer a:hover{text-decoration:underline}
           <div class="meter-thr-lbl">τ = 0.50</div>
           <div class="meter-needle" id="meter-needle" style="left:83%"></div>
         </div>
-        <div class="meter-ends">
-          <span class="meter-end">0.0<br>Diff</span>
-          <span class="meter-end" style="text-align:right">1.0<br>Same</span>
-        </div>
+        <div class="meter-ends"><span class="meter-end">0<br>Diff</span><span class="meter-end" style="text-align:right">1<br>Same</span></div>
         <div class="meter-score">
           <div class="meter-score-num" id="meter-num">0.83</div>
           <div><span class="meter-dec dec-same" id="meter-dec">● Same Source</span></div>
         </div>
       </div>
     </div>
-
-    <!-- Right audio -->
     <div class="audio-card">
       <div class="ac-label">Utterance B</div>
       <div class="ac-system" id="sys-b">—</div>
       <div class="ac-speaker" id="spk-b">—</div>
-      <audio controls id="audio-b">
-        <source id="src-b" src="" type="audio/wav">
-      </audio>
-      <div class="ac-viz">
-        <img id="lfcc-b" src="./assets/lfcc/scene1_B.png" alt="LFCC B">
-        <div class="ac-viz-lbl">LFCC spectrogram</div>
-      </div>
+      <audio controls id="audio-b"><source id="src-b" src="" type="audio/wav"></audio>
+      <div class="ac-viz"><img id="lfcc-b" src="./assets/lfcc/scene1_B.png" alt="Mel B"><div class="ac-viz-lbl">Mel spectrogram</div></div>
     </div>
   </div>
 
-  <!-- GROUND TRUTH BAR -->
   <div class="truth-bar">
     <div class="truth-left">
       <span class="truth-lbl">Ground Truth</span>
       <span class="truth-badge truth-same" id="truth-badge">✓ Same Source</span>
     </div>
-    <div class="truth-desc" id="truth-desc">
-      Both utterances are generated by the same TTS system with the same target speaker.
-    </div>
+    <div class="truth-desc" id="truth-desc">Both utterances from the same TTS system, same target speaker.</div>
   </div>
-  <p style="font-size:12px;color:var(--muted);margin-top:8px;text-align:right">
-    * Scores shown are from the RiemanSD-AAM model (best performing). Illustrative audio.
-  </p>
+  <p style="font-size:11px;color:var(--muted);margin-top:7px;text-align:right;font-style:italic">Scores from RiemanSD-AAM (ResNet34). Audio from MLAAD v8.</p>
 </section>
 
-<!-- ═══════ §2 MODEL COMPARISON ═══════ -->
+<!-- §2 -->
 <section class="section" id="comparison">
-  <div class="sec-hd">
-    <span class="sec-num">§ 2</span>
-    <h2 class="sec-title">Why Disentanglement Matters</h2>
-  </div>
-  <p class="sec-sub">
-    The same hard case — <em>same speaker, different TTS system</em> — processed by three models.
-    The baseline is misled by shared speaker identity; our methods focus on synthesis traces.
-  </p>
+  <div class="sec-hd"><span class="sec-num">§ 2</span><h2 class="sec-title">Model Comparison on Hard Case</h2></div>
+  <p class="sec-sub">Same speaker voice, different TTS systems (P-III hard case). Three models, one pair.</p>
   <hr class="div">
-
   <div class="method-rows">
-    <!-- Baseline -->
     <div class="method-row">
-      <div class="method-name-col">
-        <div class="name">AAM-Softmax</div>
-        <div class="method-tag mt-baseline">Baseline</div>
-      </div>
+      <div><div class="m-name">AAM-Softmax</div><div class="m-tag mt-base">Baseline</div></div>
       <div class="bar-col">
-        <div class="bar-track">
-          <div class="bar-fill" id="bar-0" style="width:67%;background:linear-gradient(to right,#fca5a5,#f87171)"></div>
-          <div class="bar-thr"></div>
-        </div>
-        <div class="bar-row">
-          <span class="bar-score">Score: 0.67</span>
-          <span class="bar-lbl">Predicts "Same Source" — above threshold</span>
-        </div>
+        <div class="bar-track"><div class="bar-fill" style="width:67%;background:linear-gradient(to right,#fca5a5,#f87171)"></div><div class="bar-thr"></div></div>
+        <div class="bar-row"><span class="bar-score">0.67 — above threshold</span><span class="bar-lbl">Predicts "Same Source"</span></div>
       </div>
-      <div class="result-col">
-        <div class="res-badge res-no">✗ Wrong</div>
-        <div class="res-drop" style="color:var(--red);margin-top:5px;font-size:11px">Ground truth: Different</div>
-      </div>
+      <div class="result-col"><div class="res-badge res-no">✗ Wrong</div></div>
     </div>
-
-    <!-- ChebySD -->
     <div class="method-row ours">
-      <div class="method-name-col">
-        <div class="name">ChebySD-AAM</div>
-        <div class="method-tag mt-ours">Ours</div>
-      </div>
+      <div><div class="m-name">ChebySD-AAM</div><div class="m-tag mt-ours">Ours</div></div>
       <div class="bar-col">
-        <div class="bar-track">
-          <div class="bar-fill" id="bar-1" style="width:43%;background:linear-gradient(to right,#86efac,#4ade80)"></div>
-          <div class="bar-thr"></div>
-        </div>
-        <div class="bar-row">
-          <span class="bar-score">Score: 0.43</span>
-          <span class="bar-lbl">Predicts "Different Source" — below threshold</span>
-        </div>
+        <div class="bar-track"><div class="bar-fill" style="width:43%;background:linear-gradient(to right,#86efac,#4ade80)"></div><div class="bar-thr"></div></div>
+        <div class="bar-row"><span class="bar-score">0.43 — below threshold</span><span class="bar-lbl">Predicts "Different Source"</span></div>
       </div>
-      <div class="result-col">
-        <div class="res-badge res-ok">✓ Correct</div>
-        <div class="res-drop">EER ↓ 1.39%</div>
-      </div>
+      <div class="result-col"><div class="res-badge res-ok">✓ Correct</div><div class="res-note">EER ↓ 1.39% (P-III)</div></div>
     </div>
-
-    <!-- RiemanSD -->
     <div class="method-row ours">
-      <div class="method-name-col">
-        <div class="name">RiemanSD-AAM</div>
-        <div class="method-tag mt-ours">Ours · Best</div>
-      </div>
+      <div><div class="m-name">RiemanSD-AAM</div><div class="m-tag mt-ours">Ours · Best</div></div>
       <div class="bar-col">
-        <div class="bar-track">
-          <div class="bar-fill" id="bar-2" style="width:31%;background:linear-gradient(to right,#86efac,#22c55e)"></div>
-          <div class="bar-thr"></div>
-        </div>
-        <div class="bar-row">
-          <span class="bar-score">Score: 0.31</span>
-          <span class="bar-lbl">Predicts "Different Source" — clearly below threshold</span>
-        </div>
+        <div class="bar-track"><div class="bar-fill" style="width:31%;background:linear-gradient(to right,#86efac,#22c55e)"></div><div class="bar-thr"></div></div>
+        <div class="bar-row"><span class="bar-score">0.31 — clearly below threshold</span><span class="bar-lbl">Predicts "Different Source"</span></div>
       </div>
-      <div class="result-col">
-        <div class="res-badge res-ok">✓ Correct</div>
-        <div class="res-drop">EER ↓ 2.64%</div>
-      </div>
+      <div class="result-col"><div class="res-badge res-ok">✓ Correct</div><div class="res-note">EER ↓ 3.16% (P-III)</div></div>
     </div>
-  </div>
-
-  <!-- Insight callout -->
-  <div style="background:var(--blue-bg);border:1px solid var(--blue-l);border-radius:var(--radius-sm);padding:14px 18px;margin-top:16px;font-size:13.5px;color:#1e40af;line-height:1.6">
-    <strong>Key insight:</strong> The baseline's score (0.67) is inflated by speaker similarity — the same voice is cloned by both systems. ChebySD-AAM uses Chebyshev polynomial gradient stabilization to resist this, and RiemanSD-AAM additionally projects embeddings into hyperbolic space where speaker and source distributions are geometrically separated.
   </div>
 </section>
 
-<!-- ═══════ §3 t-SNE ═══════ -->
+
+
+<!-- §3 -->
 <section class="section" id="tsne">
-  <div class="sec-hd">
-    <span class="sec-num">§ 3</span>
-    <h2 class="sec-title">Embedding Visualization</h2>
-  </div>
-  <p class="sec-sub">
-    t-SNE of source embeddings learned by RiemanSD-AAM. Toggle between coloring by TTS source system
-    and by speaker identity to confirm that speaker traits are not encoded in the source space.
-  </p>
+  <div class="sec-hd"><span class="sec-num">§ 3</span><h2 class="sec-title">Embedding Visualization (Figure 2)</h2></div>
+  <p class="sec-sub">t-SNE of source embeddings from RiemanSD-AAM. Source clusters are compact; speaker coloring shows no pattern — disentanglement confirmed.</p>
   <hr class="div">
-
   <div class="tsne-toggle">
-    <button class="tsne-btn active" onclick="setTsne('source',this)">Color by Source System</button>
-    <button class="tsne-btn" onclick="setTsne('speaker',this)">Color by Speaker Identity</button>
+    <button class="tsne-btn active" onclick="setTsne('source',this)">Colored by source system</button>
+    <button class="tsne-btn" onclick="setTsne('speaker',this)">Colored by speaker identity</button>
   </div>
-
   <div class="tsne-frame">
-    <img id="tsne-img" src="./assets/tsne_source.png" alt="t-SNE visualization">
+    <img id="tsne-img" src="./assets/tsne_source.png" alt="t-SNE">
     <div class="tsne-legend" id="tsne-legend-source">
       <div class="leg-item"><div class="leg-dot" style="background:#3b82f6"></div>Tacotron2-DDC</div>
       <div class="leg-item"><div class="leg-dot" style="background:#10b981"></div>VITS-neon</div>
@@ -602,184 +382,77 @@ footer a:hover{text-decoration:underline}
       <div class="leg-item"><div class="leg-dot" style="background:#ec4899"></div>FastPitch</div>
     </div>
     <div class="tsne-legend" id="tsne-legend-speaker" style="display:none">
-      <div class="leg-item"><div class="leg-dot" style="background:#cbd5e1"></div>Speaker clusters (pseudo-labeled)</div>
-      <div class="leg-item"><div class="leg-dot" style="background:#94a3b8"></div>No discernible pattern</div>
     </div>
-  </div>
-
-  <div class="tsne-insight" id="tsne-insight">
-    <strong>Source coloring:</strong> Embeddings form distinct, compact clusters per TTS system — the model has learned to separate synthesis traces effectively across all four encoder architectures tested.
+    <div class="tsne-cap" id="tsne-cap">Distinct, compact clusters per TTS system confirm effective source separation.</div>
   </div>
 </section>
 
-<!-- ═══════ §4 PROTOCOLS ═══════ -->
+<!-- §4 -->
 <section class="section" id="protocols">
-  <div class="sec-hd">
-    <span class="sec-num">§ 4</span>
-    <h2 class="sec-title">Evaluation Protocols</h2>
-  </div>
-  <p class="sec-sub">
-    Four protocols designed to independently stress-test source discrimination (seen/unseen generators)
-    and speaker disentanglement (same/different speaker). Each is balanced to a 1:1 positive-negative ratio.
-  </p>
+  <div class="sec-hd"><span class="sec-num">§ 4</span><h2 class="sec-title">Evaluation Protocols</h2></div>
+  <p class="sec-sub">Four protocols × two axes: source visibility (seen/unseen) and speaker condition (same/different). 27,530 utterances each, 1:1 balanced. EER/AUC from ResNet34 + RiemanSD-AAM (Table 2).</p>
   <hr class="div">
-
   <div class="proto-grid">
-
-    <!-- P-I -->
     <div class="proto-card">
       <div class="proto-hd">
-        <div>
-          <div class="proto-id">P-I · Seen · Same Speaker</div>
-          <div class="proto-name">Seen Source — Same Speaker</div>
-          <div class="proto-desc">Both utterances from generators seen during training, same pseudo-speaker label.</div>
-        </div>
-        <div class="proto-stats">
-          <div class="pstat"><span class="v">0.73%</span><span class="k">EER</span></div>
-          <div class="pstat"><span class="v">0.998</span><span class="k">AUC</span></div>
-        </div>
+        <div><div class="proto-id">P-I</div><div class="proto-name">Seen Source — Same Speaker</div><div class="proto-desc">Known generators, shared pseudo-speaker identity.</div></div>
+        <div class="proto-stats"><div class="pstat"><span class="v">0.68%</span><span class="k">EER</span></div><div class="pstat"><span class="v">0.998</span><span class="k">AUC</span></div></div>
       </div>
       <div class="proto-body">
-        <div class="proto-pair-lbl">Representative pair</div>
+        <div class="proto-pair-lbl">Sample pair</div>
         <div class="proto-pair">
-          <div class="proto-slot">
-            <div class="proto-sys">Tacotron2-DDC</div>
-            <div class="proto-spk">Speaker 03</div>
-            <audio controls style="width:100%;height:32px">
-              <source src="./assets/audio/proto_p1_A.wav" type="audio/wav">
-            </audio>
-          </div>
-          <div class="proto-slot">
-            <div class="proto-sys">Tacotron2-DDC</div>
-            <div class="proto-spk">Speaker 03</div>
-            <audio controls style="width:100%;height:32px">
-              <source src="./assets/audio/proto_p1_B.wav" type="audio/wav">
-            </audio>
-          </div>
+          <div class="proto-slot"><div class="proto-sys">tacotron2-DDC_ph</div><div class="proto-spk">Same speaker</div><audio controls style="width:100%;height:30px"><source src="./assets/audio/proto_p1_A.wav" type="audio/wav"></audio></div>
+          <div class="proto-slot"><div class="proto-sys">tacotron2-DDC_ph</div><div class="proto-spk">Same speaker</div><audio controls style="width:100%;height:30px"><source src="./assets/audio/proto_p1_B.wav" type="audio/wav"></audio></div>
         </div>
       </div>
     </div>
-
-    <!-- P-II -->
     <div class="proto-card">
       <div class="proto-hd">
-        <div>
-          <div class="proto-id">P-II · Seen · Diff Speaker</div>
-          <div class="proto-name">Seen Source — Different Speaker</div>
-          <div class="proto-desc">Both utterances from generators seen during training, different pseudo-speaker labels.</div>
-        </div>
-        <div class="proto-stats">
-          <div class="pstat"><span class="v">1.21%</span><span class="k">EER</span></div>
-          <div class="pstat"><span class="v">0.996</span><span class="k">AUC</span></div>
-        </div>
+        <div><div class="proto-id">P-II</div><div class="proto-name">Seen Source — Different Speaker</div><div class="proto-desc">Known generators, different pseudo-speaker identity.</div></div>
+        <div class="proto-stats"><div class="pstat"><span class="v">1.21%</span><span class="k">EER</span></div><div class="pstat"><span class="v">0.996</span><span class="k">AUC</span></div></div>
       </div>
       <div class="proto-body">
-        <div class="proto-pair-lbl">Representative pair</div>
+        <div class="proto-pair-lbl">Sample pair</div>
         <div class="proto-pair">
-          <div class="proto-slot">
-            <div class="proto-sys">VITS-neon</div>
-            <div class="proto-spk">Speaker 02</div>
-            <audio controls style="width:100%;height:32px">
-              <source src="./assets/audio/proto_p2_A.wav" type="audio/wav">
-            </audio>
-          </div>
-          <div class="proto-slot">
-            <div class="proto-sys">VITS-neon</div>
-            <div class="proto-spk">Speaker 09</div>
-            <audio controls style="width:100%;height:32px">
-              <source src="./assets/audio/proto_p2_B.wav" type="audio/wav">
-            </audio>
-          </div>
+          <div class="proto-slot"><div class="proto-sys">VITS-neon</div><div class="proto-spk">Speaker A</div><audio controls style="width:100%;height:30px"><source src="./assets/audio/proto_p2_A.wav" type="audio/wav"></audio></div>
+          <div class="proto-slot"><div class="proto-sys">VITS-neon</div><div class="proto-spk">Speaker B</div><audio controls style="width:100%;height:30px"><source src="./assets/audio/proto_p2_B.wav" type="audio/wav"></audio></div>
         </div>
       </div>
     </div>
-
-    <!-- P-III -->
     <div class="proto-card" style="border-color:var(--amber-l)">
       <div class="proto-hd" style="background:var(--amber-bg)">
-        <div>
-          <div class="proto-id" style="background:var(--amber-l);color:#92400e">P-III · Unseen · Same Speaker ⚠</div>
-          <div class="proto-name">Unseen Source — Same Speaker</div>
-          <div class="proto-desc">Generators not seen during training; speaker identity shared. Tests source generalization under speaker confusion.</div>
-        </div>
-        <div class="proto-stats">
-          <div class="pstat"><span class="v">4.08%</span><span class="k">EER</span></div>
-          <div class="pstat"><span class="v">0.988</span><span class="k">AUC</span></div>
-        </div>
+        <div><div class="proto-id" style="background:var(--amber-l);color:#92400e">P-III · Hard</div><div class="proto-name">Unseen Source — Same Speaker</div><div class="proto-desc">Unseen generators, shared speaker voice. Model must ignore speaker similarity and focus on synthesis traces.</div></div>
+        <div class="proto-stats"><div class="pstat"><span class="v">4.08%</span><span class="k">EER</span></div><div class="pstat"><span class="v">0.988</span><span class="k">AUC</span></div></div>
       </div>
       <div class="proto-body">
-        <div class="proto-pair-lbl">Representative hard pair</div>
+        <div class="proto-pair-lbl">Hard pair — diff source, same voice</div>
         <div class="proto-pair">
-          <div class="proto-slot">
-            <div class="proto-sys">Mars5</div>
-            <div class="proto-spk">Speaker 07</div>
-            <audio controls style="width:100%;height:32px">
-              <source src="./assets/audio/proto_p3_A.wav" type="audio/wav">
-            </audio>
-          </div>
-          <div class="proto-slot">
-            <div class="proto-sys">WhisperSpeech</div>
-            <div class="proto-spk">Speaker 07</div>
-            <audio controls style="width:100%;height:32px">
-              <source src="./assets/audio/proto_p3_B.wav" type="audio/wav">
-            </audio>
-          </div>
+          <div class="proto-slot"><div class="proto-sys">overflow</div><div class="proto-spk">Same speaker</div><audio controls style="width:100%;height:30px"><source src="./assets/audio/proto_p3_A.wav" type="audio/wav"></audio></div>
+          <div class="proto-slot"><div class="proto-sys">VITS</div><div class="proto-spk">Same speaker</div><audio controls style="width:100%;height:30px"><source src="./assets/audio/proto_p3_B.wav" type="audio/wav"></audio></div>
         </div>
       </div>
     </div>
-
-    <!-- P-IV -->
     <div class="proto-card" style="border-color:var(--amber-l)">
       <div class="proto-hd" style="background:var(--amber-bg)">
-        <div>
-          <div class="proto-id" style="background:var(--amber-l);color:#92400e">P-IV · Unseen · Diff Speaker ⚠</div>
-          <div class="proto-name">Unseen Source — Different Speaker</div>
-          <div class="proto-desc">Hardest protocol: unseen generators and different speakers. Model must rely entirely on synthesis traces.</div>
-        </div>
-        <div class="proto-stats">
-          <div class="pstat"><span class="v">7.13%</span><span class="k">EER</span></div>
-          <div class="pstat"><span class="v">0.972</span><span class="k">AUC</span></div>
-        </div>
+        <div><div class="proto-id" style="background:var(--amber-l);color:#92400e">P-IV · Hard</div><div class="proto-name">Unseen Source — Different Speaker</div><div class="proto-desc">Unseen generators, different speaker voices. Model relies entirely on synthesis traces.</div></div>
+        <div class="proto-stats"><div class="pstat"><span class="v">7.13%</span><span class="k">EER</span></div><div class="pstat"><span class="v">0.972</span><span class="k">AUC</span></div></div>
       </div>
       <div class="proto-body">
-        <div class="proto-pair-lbl">Representative hard pair</div>
+        <div class="proto-pair-lbl">Hard pair — same source, diff voices</div>
         <div class="proto-pair">
-          <div class="proto-slot">
-            <div class="proto-sys">suno/bark</div>
-            <div class="proto-spk">Speaker 01</div>
-            <audio controls style="width:100%;height:32px">
-              <source src="./assets/audio/proto_p4_A.wav" type="audio/wav">
-            </audio>
-          </div>
-          <div class="proto-slot">
-            <div class="proto-sys">suno/bark</div>
-            <div class="proto-spk">Speaker 14</div>
-            <audio controls style="width:100%;height:32px">
-              <source src="./assets/audio/proto_p4_B.wav" type="audio/wav">
-            </audio>
-          </div>
+          <div class="proto-slot"><div class="proto-sys">parler_tts_mini_v1</div><div class="proto-spk">Speaker A</div><audio controls style="width:100%;height:30px"><source src="./assets/audio/proto_p4_A.wav" type="audio/wav"></audio></div>
+          <div class="proto-slot"><div class="proto-sys">parler_tts_mini_v1</div><div class="proto-spk">Speaker B</div><audio controls style="width:100%;height:30px"><source src="./assets/audio/proto_p4_B.wav" type="audio/wav"></audio></div>
         </div>
       </div>
     </div>
-
   </div>
-  <p style="font-size:12px;color:var(--muted);margin-top:10px">
-    Results shown for ResNet34 + RiemanSD-AAM (best performing combination). EER and AUC reported with 95% confidence via 1,000 bootstrap runs.
-  </p>
 </section>
 
-<!-- ═══════ §5 GALLERY ═══════ -->
+<!-- §5 -->
 <section class="section" id="gallery">
-  <div class="sec-hd">
-    <span class="sec-num">§ 5</span>
-    <h2 class="sec-title">Synthesizer Gallery</h2>
-  </div>
-  <p class="sec-sub">
-    12 representative TTS systems from the MLAAD v8 benchmark, grouped by architectural family.
-    Each card shows a sample utterance, waveform, and 80-dimensional LFCC spectrogram (3-second segment, 16 kHz).
-  </p>
+  <div class="sec-hd"><span class="sec-num">§ 5</span><h2 class="sec-title">Source Generator Audio Samples</h2></div>
+  <p class="sec-sub">12 representative TTS systems from the MLAAD v8 benchmark, grouped by architectural family.</p>
   <hr class="div">
-
   <div class="gal-tabs">
     <button class="gal-tab active" onclick="filterGal('all',this)">All (12)</button>
     <button class="gal-tab" onclick="filterGal('foundation',this)">Foundation LMs (5)</button>
@@ -787,178 +460,25 @@ footer a:hover{text-decoration:underline}
     <button class="gal-tab" onclick="filterGal('tacotron',this)">Tacotron / AR (3)</button>
     <button class="gal-tab" onclick="filterGal('mms',this)">Meta MMS (1)</button>
   </div>
-
   <div class="gal-grid">
-
-    <!-- FOUNDATION -->
-    <div class="gal-card" data-cat="foundation">
-      <div class="gal-card-top">
-        <div class="gal-name">suno/bark</div>
-        <span class="cat-pill p-foundation">Foundation · ~900M</span>
-      </div>
-      <div class="gal-note">Auto-regressive codec LM · richest prosody · multilingual</div>
-      <div class="gal-audio"><audio controls style="width:100%;height:32px"><source src="./assets/audio/bark.wav" type="audio/wav"></audio></div>
-      <div class="gal-viz">
-        <div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">Waveform</span></div><img class="wf" src="./assets/waveform/bark.png" alt=""></div>
-        <div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">LFCC (80 coeff)</span></div><img class="lf" src="./assets/lfcc/bark.png" alt=""></div>
-      </div>
-    </div>
-
-    <div class="gal-card" data-cat="foundation">
-      <div class="gal-card-top">
-        <div class="gal-name">xtts_v2</div>
-        <span class="cat-pill p-foundation">Foundation · ~500M</span>
-      </div>
-      <div class="gal-note">Cross-lingual zero-shot voice cloning · 17 languages</div>
-      <div class="gal-audio"><audio controls style="width:100%;height:32px"><source src="./assets/audio/xtts_v2.wav" type="audio/wav"></audio></div>
-      <div class="gal-viz">
-        <div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">Waveform</span></div><img class="wf" src="./assets/waveform/xtts_v2.png" alt=""></div>
-        <div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">LFCC (80 coeff)</span></div><img class="lf" src="./assets/lfcc/xtts_v2.png" alt=""></div>
-      </div>
-    </div>
-
-    <div class="gal-card" data-cat="foundation">
-      <div class="gal-card-top">
-        <div class="gal-name">parler_tts_mini_v0.1</div>
-        <span class="cat-pill p-foundation">Foundation · ~120M</span>
-      </div>
-      <div class="gal-note">Description-guided TTS · controllable speaking style</div>
-      <div class="gal-audio"><audio controls style="width:100%;height:32px"><source src="./assets/audio/parler.wav" type="audio/wav"></audio></div>
-      <div class="gal-viz">
-        <div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">Waveform</span></div><img class="wf" src="./assets/waveform/parler.png" alt=""></div>
-        <div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">LFCC (80 coeff)</span></div><img class="lf" src="./assets/lfcc/parler.png" alt=""></div>
-      </div>
-    </div>
-
-    <div class="gal-card" data-cat="foundation">
-      <div class="gal-card-top">
-        <div class="gal-name">Metavoice-1B</div>
-        <span class="cat-pill p-foundation">Foundation · 1B</span>
-      </div>
-      <div class="gal-note">High-fidelity · fine-tunable voice cloning · English</div>
-      <div class="gal-audio"><audio controls style="width:100%;height:32px"><source src="./assets/audio/metavoice.wav" type="audio/wav"></audio></div>
-      <div class="gal-viz">
-        <div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">Waveform</span></div><img class="wf" src="./assets/waveform/metavoice.png" alt=""></div>
-        <div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">LFCC (80 coeff)</span></div><img class="lf" src="./assets/lfcc/metavoice.png" alt=""></div>
-      </div>
-    </div>
-
-    <div class="gal-card" data-cat="foundation">
-      <div class="gal-card-top">
-        <div class="gal-name">WhisperSpeech</div>
-        <span class="cat-pill p-foundation">Foundation · ~350M</span>
-      </div>
-      <div class="gal-note">Open-source · built on Whisper encoder architecture</div>
-      <div class="gal-audio"><audio controls style="width:100%;height:32px"><source src="./assets/audio/whisperspeech.wav" type="audio/wav"></audio></div>
-      <div class="gal-viz">
-        <div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">Waveform</span></div><img class="wf" src="./assets/waveform/whisperspeech.png" alt=""></div>
-        <div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">LFCC (80 coeff)</span></div><img class="lf" src="./assets/lfcc/whisperspeech.png" alt=""></div>
-      </div>
-    </div>
-
-    <!-- VITS -->
-    <div class="gal-card" data-cat="vits">
-      <div class="gal-card-top">
-        <div class="gal-name">vits--neon (en/ljspeech)</div>
-        <span class="cat-pill p-vits">VITS · ~28M</span>
-      </div>
-      <div class="gal-note">End-to-end normalizing flow + GAN · English LJSpeech</div>
-      <div class="gal-audio"><audio controls style="width:100%;height:32px"><source src="./assets/audio/vits_neon.wav" type="audio/wav"></audio></div>
-      <div class="gal-viz">
-        <div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">Waveform</span></div><img class="wf" src="./assets/waveform/vits_neon.png" alt=""></div>
-        <div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">LFCC (80 coeff)</span></div><img class="lf" src="./assets/lfcc/vits_neon.png" alt=""></div>
-      </div>
-    </div>
-
-    <div class="gal-card" data-cat="vits">
-      <div class="gal-card-top">
-        <div class="gal-name">MeloTTS</div>
-        <span class="cat-pill p-vits">VITS-derived · ~30M</span>
-      </div>
-      <div class="gal-note">Multi-accent · multilingual · fast inference</div>
-      <div class="gal-audio"><audio controls style="width:100%;height:32px"><source src="./assets/audio/melotts.wav" type="audio/wav"></audio></div>
-      <div class="gal-viz">
-        <div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">Waveform</span></div><img class="wf" src="./assets/waveform/melotts.png" alt=""></div>
-        <div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">LFCC (80 coeff)</span></div><img class="lf" src="./assets/lfcc/melotts.png" alt=""></div>
-      </div>
-    </div>
-
-    <div class="gal-card" data-cat="vits">
-      <div class="gal-card-top">
-        <div class="gal-name">vixTTS</div>
-        <span class="cat-pill p-vits">VITS variant · ~30M</span>
-      </div>
-      <div class="gal-note">Community model · expressive VITS-based synthesis</div>
-      <div class="gal-audio"><audio controls style="width:100%;height:32px"><source src="./assets/audio/vixtts.wav" type="audio/wav"></audio></div>
-      <div class="gal-viz">
-        <div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">Waveform</span></div><img class="wf" src="./assets/waveform/vixtts.png" alt=""></div>
-        <div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">LFCC (80 coeff)</span></div><img class="lf" src="./assets/lfcc/vixtts.png" alt=""></div>
-      </div>
-    </div>
-
-    <!-- TACOTRON -->
-    <div class="gal-card" data-cat="tacotron">
-      <div class="gal-card-top">
-        <div class="gal-name">tacotron2-DDC (en/ljspeech)</div>
-        <span class="cat-pill p-tacotron">Tacotron2 · ~28M</span>
-      </div>
-      <div class="gal-note">Classic seq2seq attention + HiFi-GAN vocoder · English</div>
-      <div class="gal-audio"><audio controls style="width:100%;height:32px"><source src="./assets/audio/tacotron2.wav" type="audio/wav"></audio></div>
-      <div class="gal-viz">
-        <div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">Waveform</span></div><img class="wf" src="./assets/waveform/tacotron2.png" alt=""></div>
-        <div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">LFCC (80 coeff)</span></div><img class="lf" src="./assets/lfcc/tacotron2.png" alt=""></div>
-      </div>
-    </div>
-
-    <div class="gal-card" data-cat="tacotron">
-      <div class="gal-card-top">
-        <div class="gal-name">fast_pitch (en/ljspeech)</div>
-        <span class="cat-pill p-tacotron">FastPitch · ~45M</span>
-      </div>
-      <div class="gal-note">Non-autoregressive · explicit pitch prediction · fast inference</div>
-      <div class="gal-audio"><audio controls style="width:100%;height:32px"><source src="./assets/audio/fastpitch.wav" type="audio/wav"></audio></div>
-      <div class="gal-viz">
-        <div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">Waveform</span></div><img class="wf" src="./assets/waveform/fastpitch.png" alt=""></div>
-        <div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">LFCC (80 coeff)</span></div><img class="lf" src="./assets/lfcc/fastpitch.png" alt=""></div>
-      </div>
-    </div>
-
-    <div class="gal-card" data-cat="tacotron">
-      <div class="gal-card-top">
-        <div class="gal-name">griffin_lim</div>
-        <span class="cat-pill p-tacotron">Traditional vocoder</span>
-      </div>
-      <div class="gal-note">Phase reconstruction from mel spectrogram · no neural vocoder</div>
-      <div class="gal-audio"><audio controls style="width:100%;height:32px"><source src="./assets/audio/griffin_lim.wav" type="audio/wav"></audio></div>
-      <div class="gal-viz">
-        <div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">Waveform</span></div><img class="wf" src="./assets/waveform/griffin_lim.png" alt=""></div>
-        <div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">LFCC (80 coeff)</span></div><img class="lf" src="./assets/lfcc/griffin_lim.png" alt=""></div>
-      </div>
-    </div>
-
-    <!-- MMS -->
-    <div class="gal-card" data-cat="mms">
-      <div class="gal-card-top">
-        <div class="gal-name">facebook/mms-tts-eng</div>
-        <span class="cat-pill p-mms">Meta MMS · ~100M</span>
-      </div>
-      <div class="gal-note">Massively multilingual speech synthesis · 1,000+ languages · VITS-based</div>
-      <div class="gal-audio"><audio controls style="width:100%;height:32px"><source src="./assets/audio/mms_eng.wav" type="audio/wav"></audio></div>
-      <div class="gal-viz">
-        <div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">Waveform</span></div><img class="wf" src="./assets/waveform/mms_eng.png" alt=""></div>
-        <div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">LFCC (80 coeff)</span></div><img class="lf" src="./assets/lfcc/mms_eng.png" alt=""></div>
-      </div>
-    </div>
-
+    <div class="gal-card" data-cat="foundation"><div class="gal-card-top"><div class="gal-name">suno/bark</div><span class="cat-pill p-foundation">Foundation ~900M</span></div><div class="gal-note">Auto-regressive codec LM · multilingual</div><div class="gal-audio"><audio controls style="width:100%;height:30px"><source src="./assets/audio/bark.wav" type="audio/wav"></audio></div><div class="gal-viz"><div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">Waveform</span></div><img class="wf" src="./assets/waveform/bark.png" alt=""></div><div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">Mel spectrogram</span></div><img class="lf" src="./assets/lfcc/bark.png" alt=""></div></div></div>
+    <div class="gal-card" data-cat="foundation"><div class="gal-card-top"><div class="gal-name">xtts_v2</div><span class="cat-pill p-foundation">Foundation ~500M</span></div><div class="gal-note">Zero-shot voice cloning · 17 languages</div><div class="gal-audio"><audio controls style="width:100%;height:30px"><source src="./assets/audio/xtts_v2.wav" type="audio/wav"></audio></div><div class="gal-viz"><div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">Waveform</span></div><img class="wf" src="./assets/waveform/xtts_v2.png" alt=""></div><div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">Mel spectrogram</span></div><img class="lf" src="./assets/lfcc/xtts_v2.png" alt=""></div></div></div>
+    <div class="gal-card" data-cat="foundation"><div class="gal-card-top"><div class="gal-name">parler_tts_mini_v1</div><span class="cat-pill p-foundation">Foundation ~120M</span></div><div class="gal-note">Description-guided · controllable style</div><div class="gal-audio"><audio controls style="width:100%;height:30px"><source src="./assets/audio/parler.wav" type="audio/wav"></audio></div><div class="gal-viz"><div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">Waveform</span></div><img class="wf" src="./assets/waveform/parler.png" alt=""></div><div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">Mel spectrogram</span></div><img class="lf" src="./assets/lfcc/parler.png" alt=""></div></div></div>
+    <div class="gal-card" data-cat="foundation"><div class="gal-card-top"><div class="gal-name">Metavoice-1B</div><span class="cat-pill p-foundation">Foundation 1B</span></div><div class="gal-note">High-fidelity · fine-tunable voice cloning</div><div class="gal-audio"><audio controls style="width:100%;height:30px"><source src="./assets/audio/metavoice.wav" type="audio/wav"></audio></div><div class="gal-viz"><div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">Waveform</span></div><img class="wf" src="./assets/waveform/metavoice.png" alt=""></div><div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">Mel spectrogram</span></div><img class="lf" src="./assets/lfcc/metavoice.png" alt=""></div></div></div>
+    <div class="gal-card" data-cat="foundation"><div class="gal-card-top"><div class="gal-name">WhisperSpeech</div><span class="cat-pill p-foundation">Foundation ~350M</span></div><div class="gal-note">Open-source · Whisper encoder backbone</div><div class="gal-audio"><audio controls style="width:100%;height:30px"><source src="./assets/audio/whisperspeech.wav" type="audio/wav"></audio></div><div class="gal-viz"><div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">Waveform</span></div><img class="wf" src="./assets/waveform/whisperspeech.png" alt=""></div><div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">Mel spectrogram</span></div><img class="lf" src="./assets/lfcc/whisperspeech.png" alt=""></div></div></div>
+    <div class="gal-card" data-cat="vits"><div class="gal-card-top"><div class="gal-name">vits--neon (en/ljspeech)</div><span class="cat-pill p-vits">VITS ~28M</span></div><div class="gal-note">End-to-end flow + GAN · English LJSpeech</div><div class="gal-audio"><audio controls style="width:100%;height:30px"><source src="./assets/audio/vits_neon.wav" type="audio/wav"></audio></div><div class="gal-viz"><div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">Waveform</span></div><img class="wf" src="./assets/waveform/vits_neon.png" alt=""></div><div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">Mel spectrogram</span></div><img class="lf" src="./assets/lfcc/vits_neon.png" alt=""></div></div></div>
+    <div class="gal-card" data-cat="vits"><div class="gal-card-top"><div class="gal-name">MeloTTS</div><span class="cat-pill p-vits">VITS-derived ~30M</span></div><div class="gal-note">Multi-accent · multilingual · fast inference</div><div class="gal-audio"><audio controls style="width:100%;height:30px"><source src="./assets/audio/melotts.wav" type="audio/wav"></audio></div><div class="gal-viz"><div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">Waveform</span></div><img class="wf" src="./assets/waveform/melotts.png" alt=""></div><div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">Mel spectrogram</span></div><img class="lf" src="./assets/lfcc/melotts.png" alt=""></div></div></div>
+    <div class="gal-card" data-cat="vits"><div class="gal-card-top"><div class="gal-name">vixTTS</div><span class="cat-pill p-vits">VITS variant ~30M</span></div><div class="gal-note">Expressive VITS-based synthesis</div><div class="gal-audio"><audio controls style="width:100%;height:30px"><source src="./assets/audio/vixtts.wav" type="audio/wav"></audio></div><div class="gal-viz"><div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">Waveform</span></div><img class="wf" src="./assets/waveform/vixtts.png" alt=""></div><div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">Mel spectrogram</span></div><img class="lf" src="./assets/lfcc/vixtts.png" alt=""></div></div></div>
+    <div class="gal-card" data-cat="tacotron"><div class="gal-card-top"><div class="gal-name">tacotron2-DDC (en/ljspeech)</div><span class="cat-pill p-tacotron">Tacotron2 ~28M</span></div><div class="gal-note">Seq2seq attention + HiFi-GAN vocoder</div><div class="gal-audio"><audio controls style="width:100%;height:30px"><source src="./assets/audio/tacotron2.wav" type="audio/wav"></audio></div><div class="gal-viz"><div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">Waveform</span></div><img class="wf" src="./assets/waveform/tacotron2.png" alt=""></div><div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">Mel spectrogram</span></div><img class="lf" src="./assets/lfcc/tacotron2.png" alt=""></div></div></div>
+    <div class="gal-card" data-cat="tacotron"><div class="gal-card-top"><div class="gal-name">fast_pitch (en/ljspeech)</div><span class="cat-pill p-tacotron">FastPitch ~45M</span></div><div class="gal-note">Non-autoregressive · explicit pitch control</div><div class="gal-audio"><audio controls style="width:100%;height:30px"><source src="./assets/audio/fastpitch.wav" type="audio/wav"></audio></div><div class="gal-viz"><div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">Waveform</span></div><img class="wf" src="./assets/waveform/fastpitch.png" alt=""></div><div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">Mel spectrogram</span></div><img class="lf" src="./assets/lfcc/fastpitch.png" alt=""></div></div></div>
+    <div class="gal-card" data-cat="tacotron"><div class="gal-card-top"><div class="gal-name">griffin_lim</div><span class="cat-pill p-tacotron">Traditional vocoder</span></div><div class="gal-note">Phase reconstruction from mel · no neural vocoder</div><div class="gal-audio"><audio controls style="width:100%;height:30px"><source src="./assets/audio/griffin_lim.wav" type="audio/wav"></audio></div><div class="gal-viz"><div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">Waveform</span></div><img class="wf" src="./assets/waveform/griffin_lim.png" alt=""></div><div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">Mel spectrogram</span></div><img class="lf" src="./assets/lfcc/griffin_lim.png" alt=""></div></div></div>
+    <div class="gal-card" data-cat="mms"><div class="gal-card-top"><div class="gal-name">facebook/mms-tts-eng</div><span class="cat-pill p-mms">Meta MMS ~100M</span></div><div class="gal-note">Massively multilingual · 1,000+ languages · VITS-based</div><div class="gal-audio"><audio controls style="width:100%;height:30px"><source src="./assets/audio/mms_eng.wav" type="audio/wav"></audio></div><div class="gal-viz"><div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">Waveform</span></div><img class="wf" src="./assets/waveform/mms_eng.png" alt=""></div><div class="gal-viz-item"><div class="gal-viz-hd"><span class="gal-viz-lbl">Mel spectrogram</span></div><img class="lf" src="./assets/lfcc/mms_eng.png" alt=""></div></div></div>
   </div>
 </section>
 
-<!-- ═══════ CITATION ═══════ -->
+<!-- Citation -->
 <section class="section" id="citation">
-  <div class="sec-hd">
-    <span class="sec-num">§ 6</span>
-    <h2 class="sec-title">Citation</h2>
-  </div>
+  <div class="sec-hd"><span class="sec-num">§ 6</span><h2 class="sec-title">Citation</h2></div>
   <hr class="div">
   <div class="cite-wrap">
     <button class="copy-btn" onclick="copyBib()">Copy BibTeX</button>
@@ -967,7 +487,6 @@ footer a:hover{text-decoration:underline}
               via Chebyshev Polynomial and Riemannian Metric Learning</span>},
   <span class="c-field">author</span>    = {<span class="c-val">Xuan, Xi and Zhang, Wenxin and Li, Zhiyu and
               Williams, Jennifer and Hautam{\"a}ki, Ville and Kinnunen, Tomi</span>},
-  <span class="c-field">booktitle</span> = {<span class="c-val">Proc. Interspeech 2026</span>},
   <span class="c-field">year</span>      = {<span class="c-val">2026</span>},
   <span class="c-field">url</span>       = {<span class="c-val">https://github.com/xxuan-acoustics/RiemannSD-Net</span>},
 <span class="c-key">}</span></div>
@@ -975,170 +494,104 @@ footer a:hover{text-decoration:underline}
 </section>
 
 <footer>
-  SDML Demo · University of Eastern Finland · Interspeech 2026<br>
-  Code and models: <a href="https://github.com/xxuan-acoustics/RiemannSD-Net" target="_blank">github.com/xxuan-acoustics/RiemannSD-Net</a>
+  SDML Demo · University of Eastern Finland<br>
+  <a href="https://github.com/xxuan-acoustics/RiemannSD-Net" target="_blank">github.com/xxuan-acoustics/RiemannSD-Net</a>
 </footer>
 
-</div><!-- /.page -->
+</div>
 
 <script>
-/* ═══════ SCENARIO DATA ═══════ */
-const scenarios = [
-  {
-    sysA:'Tacotron2-DDC', spkA:'Speaker 03',
-    sysB:'Tacotron2-DDC', spkB:'Speaker 03',
-    srcA:'./assets/audio/scene1_A.wav', srcB:'./assets/audio/scene1_B.wav',
-    lfccA:'./assets/lfcc/scene1_A.png', lfccB:'./assets/lfcc/scene1_B.png',
-    score:0.83, truth:'same',
-    desc:'Both utterances are generated by the <strong>same TTS system</strong> with the <strong>same target speaker</strong>. All models correctly identify them as same source.',
-    hard:false
-  },
-  {
-    sysA:'Tacotron2-DDC', spkA:'Speaker 03',
-    sysB:'suno/bark',      spkB:'Speaker 11',
-    srcA:'./assets/audio/scene2_A.wav', srcB:'./assets/audio/scene2_B.wav',
-    lfccA:'./assets/lfcc/scene2_A.png', lfccB:'./assets/lfcc/scene2_B.png',
-    score:0.12, truth:'different',
-    desc:'Utterances from <strong>completely different TTS systems and different speakers</strong>. All models correctly predict different source.',
-    hard:false
-  },
-  {
-    sysA:'VITS-neon',       spkA:'Speaker 07',
-    sysB:'Tacotron2-DDC',   spkB:'Speaker 07',
-    srcA:'./assets/audio/scene3_A.wav', srcB:'./assets/audio/scene3_B.wav',
-    lfccA:'./assets/lfcc/scene3_A.png', lfccB:'./assets/lfcc/scene3_B.png',
-    score:0.31, truth:'different',
-    desc:'<strong>Ground truth: different source</strong> — but same speaker voice is used by both systems. Without disentanglement, the baseline scores 0.67 (predicts "same") due to shared speaker identity.',
-    hard:true,
-    hardText:'Protocol P-III: Same speaker voice, different TTS systems. The baseline\'s score is inflated by speaker similarity. RiemanSD-AAM correctly separates source traces from speaker identity.'
-  },
-  {
-    sysA:'suno/bark',  spkA:'Speaker 02',
-    sysB:'suno/bark',  spkB:'Speaker 14',
-    srcA:'./assets/audio/scene4_A.wav', srcB:'./assets/audio/scene4_B.wav',
-    lfccA:'./assets/lfcc/scene4_A.png', lfccB:'./assets/lfcc/scene4_B.png',
-    score:0.62, truth:'same',
-    desc:'<strong>Ground truth: same source</strong> — same TTS system generating voices for two different speakers. Without disentanglement, the baseline scores 0.36 (predicts "different") due to speaker mismatch.',
-    hard:true,
-    hardText:'Protocol P-IV: Same TTS system, different speaker voices. The baseline misses the shared synthesis traces. RiemanSD-AAM identifies the common generator despite speaker differences.'
-  }
+const scenarios=[
+  {sysA:'tacotron2-DDC_ph',spkA:'Same speaker',sysB:'tacotron2-DDC_ph',spkB:'Same speaker',
+   srcA:'./assets/audio/scene1_A.wav',srcB:'./assets/audio/scene1_B.wav',
+   lfccA:'./assets/lfcc/scene1_A.png',lfccB:'./assets/lfcc/scene1_B.png',
+   score:0.83,truth:'same',desc:'Both utterances from the <em>same TTS system</em>, same target speaker.',hard:false},
+  {sysA:'Metavoice-1B',spkA:'Different speaker',sysB:'MeloTTS',spkB:'Different speaker',
+   srcA:'./assets/audio/scene2_A.wav',srcB:'./assets/audio/scene2_B.wav',
+   lfccA:'./assets/lfcc/scene2_A.png',lfccB:'./assets/lfcc/scene2_B.png',
+   score:0.12,truth:'different',desc:'<em>Different TTS systems</em>, different speakers. All models correctly predict different source.',hard:false},
+  {sysA:'overflow',spkA:'Same speaker (spk_score=0.91)',sysB:'VITS',spkB:'Same speaker (spk_score=0.91)',
+   srcA:'./assets/audio/scene3_A.wav',srcB:'./assets/audio/scene3_B.wav',
+   lfccA:'./assets/lfcc/scene3_A.png',lfccB:'./assets/lfcc/scene3_B.png',
+   score:0.31,truth:'different',
+   desc:'<em>Different TTS systems, same speaker voice.</em> Baseline scores 0.67 (wrong). RiemanSD-AAM scores 0.31 (correct).',
+   hard:true,hardText:'P-III: The baseline is misled by shared speaker identity. Our models focus on synthesis traces.'},
+  {sysA:'parler_tts_mini_v1',spkA:'Speaker A',sysB:'parler_tts_mini_v1',spkB:'Speaker B',
+   srcA:'./assets/audio/scene4_A.wav',srcB:'./assets/audio/scene4_B.wav',
+   lfccA:'./assets/lfcc/scene4_A.png',lfccB:'./assets/lfcc/scene4_B.png',
+   score:0.62,truth:'same',
+   desc:'<em>Same TTS system, different speaker voices.</em> Baseline scores 0.36 (wrong). RiemanSD-AAM scores 0.62 (correct).',
+   hard:true,hardText:'P-IV: Despite different speaker voices, our model identifies the shared synthesis origin.'}
 ];
 
-function setScenario(idx, btn) {
-  document.querySelectorAll('.sc-tab').forEach(t => t.classList.remove('active'));
+function setScenario(idx,btn){
+  document.querySelectorAll('.sc-tab').forEach(t=>t.classList.remove('active'));
   btn.classList.add('active');
-
-  const s = scenarios[idx];
-
-  document.getElementById('sys-a').textContent = s.sysA;
-  document.getElementById('spk-a').textContent = s.spkA;
-  document.getElementById('sys-b').textContent = s.sysB;
-  document.getElementById('spk-b').textContent = s.spkB;
-
-  const srcA = document.getElementById('src-a');
-  const srcB = document.getElementById('src-b');
-  srcA.src = s.srcA; srcB.src = s.srcB;
+  const s=scenarios[idx];
+  document.getElementById('sys-a').textContent=s.sysA;
+  document.getElementById('spk-a').textContent=s.spkA;
+  document.getElementById('sys-b').textContent=s.sysB;
+  document.getElementById('spk-b').textContent=s.spkB;
+  document.getElementById('src-a').src=s.srcA;
+  document.getElementById('src-b').src=s.srcB;
   document.getElementById('audio-a').load();
   document.getElementById('audio-b').load();
+  document.getElementById('lfcc-a').src=s.lfccA;
+  document.getElementById('lfcc-b').src=s.lfccB;
+  document.getElementById('meter-needle').style.left=(s.score*100)+'%';
+  document.getElementById('meter-num').textContent=s.score.toFixed(2);
+  const dec=document.getElementById('meter-dec');
+  if(s.score>=0.5){dec.className='meter-dec dec-same';dec.textContent='● Same Source';}
+  else{dec.className='meter-dec dec-diff';dec.textContent='● Different Source';}
+  const badge=document.getElementById('truth-badge');
+  if(s.truth==='same'){badge.className='truth-badge truth-same';badge.textContent='✓ Same Source';}
+  else{badge.className='truth-badge truth-diff';badge.textContent='✗ Different Source';}
+  document.getElementById('truth-desc').innerHTML=s.desc;
+  const banner=document.getElementById('hard-banner');
+  if(s.hard){banner.classList.add('show');document.getElementById('hard-banner-text').textContent=s.hardText;}
+  else{banner.classList.remove('show');}
+}
 
-  document.getElementById('lfcc-a').src = s.lfccA;
-  document.getElementById('lfcc-b').src = s.lfccB;
-
-  // Update meter
-  const pct = s.score * 100;
-  document.getElementById('meter-needle').style.left = pct + '%';
-  document.getElementById('meter-num').textContent = s.score.toFixed(2);
-
-  const dec = document.getElementById('meter-dec');
-  if (s.score >= 0.5) {
-    dec.className = 'meter-dec dec-same';
-    dec.textContent = '● Same Source';
+function setTsne(type,btn){
+  document.querySelectorAll('.tsne-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const img=document.getElementById('tsne-img');
+  const cap=document.getElementById('tsne-cap');
+  if(type==='source'){
+    img.src='./assets/tsne_source.png';
+    document.getElementById('tsne-legend-source').style.display='flex';
+    document.getElementById('tsne-legend-speaker').style.display='none';
+    cap.textContent='Distinct, compact clusters per TTS system confirm effective source separation.';
   } else {
-    dec.className = 'meter-dec dec-diff';
-    dec.textContent = '● Different Source';
-  }
-
-  // Ground truth
-  const badge = document.getElementById('truth-badge');
-  if (s.truth === 'same') {
-    badge.className = 'truth-badge truth-same';
-    badge.textContent = '✓ Same Source';
-  } else {
-    badge.className = 'truth-badge truth-diff';
-    badge.textContent = '✗ Different Source';
-  }
-  document.getElementById('truth-desc').innerHTML = s.desc;
-
-  // Hard banner
-  const banner = document.getElementById('hard-banner');
-  if (s.hard) {
-    banner.classList.add('show');
-    document.getElementById('hard-banner-text').innerHTML = s.hardText;
-  } else {
-    banner.classList.remove('show');
+    img.src='./assets/tsne_speaker.png';
+    document.getElementById('tsne-legend-source').style.display='none';
+    document.getElementById('tsne-legend-speaker').style.display='flex';
+    cap.textContent='No speaker clusters visible — speaker traits are not encoded in the source embedding space.';
   }
 }
 
-/* ═══════ t-SNE ═══════ */
-function setTsne(type, btn) {
-  document.querySelectorAll('.tsne-btn').forEach(b => b.classList.remove('active'));
+function filterGal(cat,btn){
+  document.querySelectorAll('.gal-tab').forEach(t=>t.classList.remove('active'));
   btn.classList.add('active');
-
-  const img = document.getElementById('tsne-img');
-  const insightEl = document.getElementById('tsne-insight');
-  const legSrc = document.getElementById('tsne-legend-source');
-  const legSpk = document.getElementById('tsne-legend-speaker');
-
-  if (type === 'source') {
-    img.src = './assets/tsne_source.png';
-    img.alt = 't-SNE colored by TTS source system';
-    legSrc.style.display = 'flex';
-    legSpk.style.display = 'none';
-    insightEl.innerHTML = '<strong>Source coloring:</strong> Embeddings form distinct, compact clusters per TTS system — the model has learned to separate synthesis traces effectively. Cluster separation corresponds to architectural differences between generators.';
-  } else {
-    img.src = './assets/tsne_speaker.png';
-    img.alt = 't-SNE colored by speaker identity';
-    legSrc.style.display = 'none';
-    legSpk.style.display = 'flex';
-    insightEl.innerHTML = '<strong>Speaker coloring:</strong> No discernible speaker clusters appear — the same speaker\'s utterances are scattered across all TTS source clusters. This confirms that RiemanSD-AAM successfully disentangles speaker identity from source traces.';
-  }
-}
-
-/* ═══════ GALLERY FILTER ═══════ */
-function filterGal(cat, btn) {
-  document.querySelectorAll('.gal-tab').forEach(t => t.classList.remove('active'));
-  btn.classList.add('active');
-  document.querySelectorAll('.gal-card').forEach(c => {
-    c.style.display = (cat === 'all' || c.dataset.cat === cat) ? '' : 'none';
+  document.querySelectorAll('.gal-card').forEach(c=>{
+    c.style.display=(cat==='all'||c.dataset.cat===cat)?'':'none';
   });
 }
 
-/* ═══════ CITATION COPY ═══════ */
-function copyBib() {
-  const raw = `@inproceedings{xuan2026sdml,
-  title     = {Disentangling Speaker Traits for Deepfake Source Verification via Chebyshev Polynomial and Riemannian Metric Learning},
-  author    = {Xuan, Xi and Zhang, Wenxin and Li, Zhiyu and Williams, Jennifer and Hautam{\\"a}ki, Ville and Kinnunen, Tomi},
-  booktitle = {Proc. Interspeech 2026},
-  year      = {2026},
-  url       = {https://github.com/xxuan-acoustics/RiemannSD-Net},
-}`;
-  navigator.clipboard.writeText(raw).then(() => {
-    const btn = document.querySelector('.copy-btn');
-    const orig = btn.textContent;
-    btn.textContent = 'Copied!';
-    setTimeout(() => btn.textContent = orig, 2000);
+function copyBib(){
+  const raw=`@inproceedings{xuan2026sdml,\n  title={Disentangling Speaker Traits for Deepfake Source Verification via Chebyshev Polynomial and Riemannian Metric Learning},\n  author={Xuan, Xi and Zhang, Wenxin and Li, Zhiyu and Williams, Jennifer and Hautam{\\"a}ki, Ville and Kinnunen, Tomi},\n  year={2026},\n  url={https://github.com/xxuan-acoustics/RiemannSD-Net},\n}`;
+  navigator.clipboard.writeText(raw).then(()=>{
+    const btn=document.querySelector('.copy-btn');btn.textContent='Copied!';
+    setTimeout(()=>btn.textContent='Copy BibTeX',2000);
   });
 }
 
-/* ═══════ INIT ═══════ */
-window.addEventListener('DOMContentLoaded', () => {
-  const s = scenarios[0];
-  document.getElementById('sys-a').textContent = s.sysA;
-  document.getElementById('spk-a').textContent = s.spkA;
-  document.getElementById('sys-b').textContent = s.sysB;
-  document.getElementById('spk-b').textContent = s.spkB;
-  document.getElementById('truth-desc').innerHTML = s.desc;
-});
+const s0=scenarios[0];
+document.getElementById('sys-a').textContent=s0.sysA;
+document.getElementById('spk-a').textContent=s0.spkA;
+document.getElementById('sys-b').textContent=s0.sysB;
+document.getElementById('spk-b').textContent=s0.spkB;
+document.getElementById('truth-desc').innerHTML=s0.desc;
 </script>
 </body>
 </html>
