@@ -59,6 +59,15 @@ You can use demo/demo.ipynb to test a pair of .wav files by replacing their path
 
 
 ## Citation
+@misc{xuan2026disentanglingspeakertraitsdeepfake,
+      title={Disentangling Speaker Traits for Deepfake Source Verification via Chebyshev Polynomial and Riemannian Metric Learning}, 
+      author={Xi Xuan and Wenxin Zhang and Zhiyu Li and Jennifer Williams and Ville Hautamäki and Tomi H. Kinnunen},
+      year={2026},
+      eprint={2603.21875},
+      archivePrefix={arXiv},
+      primaryClass={eess.AS},
+      url={https://arxiv.org/abs/2603.21875}, 
+}
 
 If you find our repository valuable for your work, please consider citing our paper:
 
