@@ -1,6 +1,6 @@
 <div align="center">
 
-[![arXiv](https://img.shields.io/badge/arXiv-2603.21875v1-b31b1b.svg)](https://arxiv.org/abs/2603.21875) [![Hugging Face]([https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Models-blue](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Protocols-blue))](https://huggingface.co/datasets/xxuan-speech/MLAAD_Protocols_for_Source-Speaker_Disentanglement_Research) [![Website](https://img.shields.io/badge/Website-%F0%9F%8C%90-9cf)](https://xxuan-acoustics.github.io/RiemannSD-Net/)
+[![arXiv](https://img.shields.io/badge/arXiv-2603.21875v1-b31b1b.svg)](https://arxiv.org/abs/2603.21875) [![Hugging Face](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Protocols-blue)](https://huggingface.co/datasets/xxuan-speech/MLAAD_Protocols_for_Source-Speaker_Disentanglement_Research) [![Website](https://img.shields.io/badge/Website-%F0%9F%8C%90-9cf)](https://xxuan-acoustics.github.io/RiemannSD-Net/)
 
 <h2>Disentangling Speaker Traits for Deepfake Source Verification via Chebyshev Polynomial and Riemannian Metric Learning</h2>
 <p>Xi Xuan, Wenxin Zhang, Zhiyu Li, Jennifer Williams, Ville Hautamaki, Tomi Kinnunen</p>
@@ -37,7 +37,7 @@ pip install pytorch-lightning==1.9.5
 pip install -r requirements.txt
 ```
 
-### 2. Download the MLAAD v8 Dataset and Protocols [![Hugging Face]([https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Models-blue](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Protocols-blue))](https://huggingface.co/datasets/xxuan-speech/MLAAD_Protocols_for_Source-Speaker_Disentanglement_Research)
+### 2. Download the MLAAD v8 Dataset and Protocols [![Hugging Face](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Protocols-blue)](https://huggingface.co/datasets/xxuan-speech/MLAAD_Protocols_for_Source-Speaker_Disentanglement_Research)
 
 Our experiments are conducted on the MLAAD benchmark. You can access the dataset and our newly proposed evaluation protocols via the links below:
 
