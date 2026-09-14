@@ -8,7 +8,7 @@
 
 ## 📄 Poster
 
-![RiemannSD-Net Poster](./poster_RiemannSD-Net_A0.pdf)
+[**RiemannSD-Net Poster (A0, PDF)**](./poster_RiemannSD-Net_A0.pdf)
 
 ## 📋 Mathematical Foundations
 
