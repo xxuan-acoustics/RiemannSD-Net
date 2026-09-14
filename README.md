@@ -6,6 +6,10 @@
 <p>Xi Xuan, Wenxin Zhang, Zhiyu Li, Jennifer Williams, Ville Hautamaki, Tomi Kinnunen</p>
 </div>
 
+## 📄 Poster
+
+![RiemannSD-Net](./poster_RiemannSD-Net_A0.pdf)
+
 ## 📋 Mathematical Foundations
 
 Our paper aims to bridge classical mathematics with modern speech processing. The theoretical essence of this paper is drawn from the classical theories of two renowned mathematicians:
